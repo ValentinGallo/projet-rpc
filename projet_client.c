@@ -11,32 +11,15 @@ void
 geom_prog_1(char *host)
 {
 	CLIENT *clnt;
-	int  *init;
-	char *init_1_arg;
-	int  *result_2;
-	personne  enregistrer_adherent_1_arg;
-	int  *result_3;
-	personne  renouveler_adherent_1_arg;
-	tab_outils  *result_4;
-	param_date  lister_outils_1_arg;
-	tab_postes  *result_5;
-	param_date  lister_postes_1_arg;
-	int  *result_6;
-	param_outil  louer_outil_1_arg;
-	int  *result_7;
-	param_poste  reserver_poste_1_arg;
-	int  *result_8;
-	personne  renouveler_adhesion_1_arg;
-	informations  *result_9;
-	char *afficher_tarifs_postes_1_arg;
-	informations  *result_10;
-	char *afficher_mode_paiement_1_arg;
-	int  *result_11;
-	param_paiement  effectuer_paiement_1_arg;
-	int  *result_12;
-	int  retour_location_1_arg;
-	int  *result_13;
-	outil  signaler_anomalie_1_arg;
+	int  *resultat;
+	void *vide;
+
+	//Informations client
+	personne client;
+	client.id = 0;
+	strcpy(client.prenom,"Jean");
+	strcpy(client.nom,"Maurice");
+	client.adherent = 1;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, GEOM_PROG, GEOM_VERSION_1, "udp");
@@ -46,22 +29,27 @@ geom_prog_1(char *host)
 	}
 #endif	/* DEBUG */
 	printf("CLIENT : \n");
-	init = init_1((void*)&init_1_arg, clnt);
+	resultat = init_1(vide,clnt);
 
-	if (init == (int *) NULL) {
+	//INIT
+	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	else printf("Initialisation réussie \n");
-	
-	result_2 = enregistrer_adherent_1(&enregistrer_adherent_1_arg, clnt);
-	if (result_2 == (int *) NULL) {
+	else printf("Initialisation réussie(code : %d) \n",*resultat);
+
+	//Enregistrer adhérent
+
+	resultat = enregistrer_adherent_1(&client, clnt);
+	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
+	else printf("Enregistrement réussie(code : %d) \n",*resultat);
+	/*
 	result_3 = renouveler_adherent_1(&renouveler_adherent_1_arg, clnt);
 	if (result_3 == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	/*
+
 	result_4 = lister_outils_1(&lister_outils_1_arg, clnt);
 	if (result_4 == (tab_outils *) NULL) {
 		clnt_perror (clnt, "call failed");

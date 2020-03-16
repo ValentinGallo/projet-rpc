@@ -14,7 +14,7 @@ init_1_svc(void *argp, struct svc_req *rqstp)
 	static int  result;
 
 	
-	printf("init success");
+	printf("init");
 	result = 1;
 	return &result;
 }
@@ -24,10 +24,9 @@ enregistrer_adherent_1_svc(personne *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
-	printf("init");
+	liste_personnes[argp->id] = *argp;
+	printf("enregistrement");
+	result = 1;
 	return &result;
 }
 
