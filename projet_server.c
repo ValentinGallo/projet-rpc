@@ -8,6 +8,7 @@
 
 personne liste_personnes[50]; 
 tab_outils outils[50];
+informations infos = {tarifs:"5€",horraires:"8h"};
 
 int *
 init_1_svc(void *argp, struct svc_req *rqstp)
@@ -105,13 +106,7 @@ renouveler_adhesion_1_svc(personne *argp, struct svc_req *rqstp)
 informations *
 afficher_tarifs_postes_1_svc(void *argp, struct svc_req *rqstp)
 {
-	static informations  result;
-
-	/*
-	 * insert server code here
-	 */
-
-	return &result;
+	return &infos;
 }
 
 informations *
