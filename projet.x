@@ -1,3 +1,10 @@
+struct date{ 
+    int jour;
+    int mois; 
+    int annee;
+    int heure;
+};
+
 struct personne{
     int id;
     char prenom[255];
@@ -23,13 +30,6 @@ struct location{
     int id_outil;
     date date_debut;
     date date_fin;
-};
-
-struct date{ 
-    int jour;
-    int mois; 
-    int annee;
-    int heure;
 };
 
 struct param_date{

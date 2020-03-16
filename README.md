@@ -115,3 +115,54 @@ struct date{
     int heure;
 };
 ```
+
+- Un paiement :
+```c
+struct paiement{
+    int id;
+    char nom[255];
+};
+```
+
+## Paramètres méthodes
+```c
+struct param_paiement{
+    int id_paiement;
+    int id_location;
+    int type_location;
+};
+```
+```c
+struct param_poste{
+    int id_poste;
+    int id_adherent;
+    date date_debut;
+    date date_fin;
+};
+```
+```c
+struct param_outil{
+    int id_outil;
+    int id_adherent;
+    date date_debut;
+    date date_fin;
+};
+```
+```c
+struct param_date{
+    date date_debut;
+    date date_fin;
+};
+```
+```c
+struct tab_outils{
+	outil listoutils[50];
+	int nbOutils;
+};
+```
+```c
+struct tab_postes{
+	poste listpostes[50];
+	int nbPostes;
+};
+```
