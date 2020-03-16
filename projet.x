@@ -8,6 +8,7 @@ struct personne{
 struct outil{
     int id;
     char * nom;
+    int anomalie;
 };
 
 struct poste{
@@ -79,6 +80,7 @@ program GEOM_PROG {
 	version GEOM_VERSION_1 {
         void INIT() = 1;
         void enregistrer_adherent(personne une_personne) = 2;
+        void renouveler_adherent(personne une_personne) = 3;
         tab_outils lister_outils(param_date) = 3;
         tab_postes lister_postes(param_date) = 4;
         int louer_outil(param_outil) = 5;
@@ -89,6 +91,7 @@ program GEOM_PROG {
         int effectuer_paiement(param_paiement) = 10;
         int retour_location(int id_location) = 11;
         afficher_description_poste(int id_poste) = 12;
+        int signaler_anomalie(outil un_outil);
         
         
 	} = 1;
