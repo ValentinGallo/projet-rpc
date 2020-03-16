@@ -72,23 +72,27 @@ struct tab_postes{
 	int nbPostes;
 };
 
+struct informations{
+    char tarifs[255];
+    char horraires[255];
+};
+
 
 program GEOM_PROG {
 	version GEOM_VERSION_1 {
-        void INIT() = 1;
-        void enregistrer_adherent(personne une_personne) = 2;
-        void renouveler_adherent(personne une_personne) = 3;
+        int INIT() = 1;
+        int enregistrer_adherent(personne une_personne) = 2;
+        int renouveler_adherent(personne une_personne) = 3;
         tab_outils lister_outils(param_date) = 4;
         tab_postes lister_postes(param_date) = 5;
         int louer_outil(param_outil) = 6;
         int reserver_poste(param_poste) = 7;
         int renouveler_adhesion(personne une_personne) = 8;
-        void afficher_tarifs_postes() = 9;
-        void afficher_mode_paiement() = 10;
+        informations afficher_tarifs_postes() = 9;
+        informations afficher_mode_paiement() = 10;
         int effectuer_paiement(param_paiement) = 11;
         int retour_location(int id_location) = 12;
-        void afficher_description_poste(int id_poste) = 13;
-        int signaler_anomalie(outil un_outil) = 14;
+        int signaler_anomalie(outil un_outil) = 13;
         
         
 	} = 1;
