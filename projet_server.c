@@ -7,12 +7,18 @@
 #include "projet.h"
 
 personne liste_personnes[50]; 
+tab_outils outils[50];
 
 int *
 init_1_svc(void *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
+	outils->nbOutils = 0;
+
+	//Ajout d'un outil
+	outil outil_1 = {id:outils->nbOutils, nom:"Marteau",anomalie:0};
+	outils->listoutils[outils->nbOutils] = outil_1;
 	
 	printf("init");
 	result = 1;
@@ -38,20 +44,14 @@ renouveler_adherent_1_svc(personne *argp, struct svc_req *rqstp)
 	/*
 	 * insert server code here
 	 */
-	printf("init");
+
 	return &result;
 }
 
 tab_outils *
 lister_outils_1_svc(param_date *argp, struct svc_req *rqstp)
 {
-	static tab_outils  result;
-
-	/*
-	 * insert server code here
-	 */
-	printf("init");
-	return &result;
+	return outils;
 }
 
 tab_postes *
@@ -62,7 +62,7 @@ lister_postes_1_svc(param_date *argp, struct svc_req *rqstp)
 	/*
 	 * insert server code here
 	 */
-	printf("init");
+
 	return &result;
 }
 

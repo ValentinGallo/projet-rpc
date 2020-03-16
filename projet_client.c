@@ -13,6 +13,7 @@ geom_prog_1(char *host)
 	CLIENT *clnt;
 	int  *resultat;
 	void *vide;
+	tab_outils *outils;
 
 	//Informations client
 	personne client;
@@ -21,6 +22,7 @@ geom_prog_1(char *host)
 	strcpy(client.nom,"Maurice");
 	client.adherent = 1;
 
+
 #ifndef	DEBUG
 	clnt = clnt_create (host, GEOM_PROG, GEOM_VERSION_1, "udp");
 	if (clnt == NULL) {
@@ -28,6 +30,7 @@ geom_prog_1(char *host)
 		exit (1);
 	}
 #endif	/* DEBUG */
+
 	printf("CLIENT : \n");
 	resultat = init_1(vide,clnt);
 
@@ -44,52 +47,19 @@ geom_prog_1(char *host)
 		clnt_perror (clnt, "call failed");
 	}
 	else printf("Enregistrement réussie(code : %d) \n",*resultat);
-	/*
-	result_3 = renouveler_adherent_1(&renouveler_adherent_1_arg, clnt);
-	if (result_3 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
 
-	result_4 = lister_outils_1(&lister_outils_1_arg, clnt);
-	if (result_4 == (tab_outils *) NULL) {
+	//Liste outils
+	date debut = {heure:0,jour:1,mois:1,annee:2020};
+	date fin = {heure:24,jour:1,mois:1,annee:2020};
+	param_date dates = {date_debut:debut, date_fin:fin};
+	outils = lister_outils_1(&dates, clnt);
+	if (outils == (tab_outils *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	result_5 = lister_postes_1(&lister_postes_1_arg, clnt);
-	if (result_5 == (tab_postes *) NULL) {
-		clnt_perror (clnt, "call failed");
+	for(int i = 0;i<outils->nbOutils;i++){
+		printf("Outil %d : %s",i,outils->listoutils[i].nom);
 	}
-	result_6 = louer_outil_1(&louer_outil_1_arg, clnt);
-	if (result_6 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_7 = reserver_poste_1(&reserver_poste_1_arg, clnt);
-	if (result_7 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_8 = renouveler_adhesion_1(&renouveler_adhesion_1_arg, clnt);
-	if (result_8 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_9 = afficher_tarifs_postes_1((void*)&afficher_tarifs_postes_1_arg, clnt);
-	if (result_9 == (informations *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_10 = afficher_mode_paiement_1((void*)&afficher_mode_paiement_1_arg, clnt);
-	if (result_10 == (informations *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_11 = effectuer_paiement_1(&effectuer_paiement_1_arg, clnt);
-	if (result_11 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_12 = retour_location_1(&retour_location_1_arg, clnt);
-	if (result_12 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_13 = signaler_anomalie_1(&signaler_anomalie_1_arg, clnt);
-	if (result_13 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}*/
+	
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
