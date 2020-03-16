@@ -1,20 +1,7 @@
 # projet-rpc
 
-## Variables globales (server.c)
+Projet RPC-GEN de Valentin GALLO et Killian Le Corre
 
-tableau d'adhérents (ex : adherent liste_adherents[100])
-id personnel
-id
-
-tableau d'outils (ex : outil liste_outils[100])
-
-tableau postes (ex : poste liste_postes[100])
-
-
-ex :
-struct location
-    id_personnel(->struct personnel)
-    id_outil (->struct outil)
 
 ## Scénario 1 :
 
@@ -75,4 +62,56 @@ int effectuer_paiement(param_paiement);
 8 - reserver poste (validé car adhérent)
 ```c
 int reserver_poste(param_poste)
+```
+## Autres informations
+
+## Structures
+
+- Une personne :
+```c
+struct personne{
+    int id;
+    char prenom[255];
+    char nom[255];
+    int adherent; //True or False
+};
+```
+
+- Un outil :
+```c
+struct outil{
+    int id;
+    char nom[255];
+    int anomalie; //True or False
+};
+```
+
+- Un poste :
+```c
+struct poste{
+    int id;
+    char nom[255];
+    char description[255];
+};
+```
+
+- Une location (outil ou poste) :
+```c
+struct location{
+    int id;
+    int id_personne;
+    int id_outil; //1 si outil, 2 si poste
+    date date_debut;
+    date date_fin;
+};
+```
+
+- Une date :
+```c
+struct date{ 
+    int jour;
+    int mois; 
+    int annee;
+    int heure;
+};
 ```
