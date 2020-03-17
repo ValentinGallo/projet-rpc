@@ -8,7 +8,7 @@
 
 personne liste_personnes[50]; 
 tab_outils outils[50];
-informations infos = {tarifs:"5€",horraires:"8h"};
+static informations infos = {tarifs:"10€ pour 1h, 30€ pour 4h, et 50€ pour 8h",horraires:"les jours de la semaine de 12h à 14h ou de 17h à 19h, et tous les samedis de 14h à 18h"};
 
 int *
 init_1_svc(void *argp, struct svc_req *rqstp)
@@ -52,7 +52,13 @@ renouveler_adherent_1_svc(personne *argp, struct svc_req *rqstp)
 tab_outils *
 lister_outils_1_svc(param_date *argp, struct svc_req *rqstp)
 {
-	return outils;
+	tab_outils  result = *outils;
+
+	/*
+	 * insert server code here
+	 */
+
+	return &result;
 }
 
 tab_postes *
@@ -106,6 +112,9 @@ renouveler_adhesion_1_svc(personne *argp, struct svc_req *rqstp)
 informations *
 afficher_tarifs_postes_1_svc(void *argp, struct svc_req *rqstp)
 {
+	//static informations  result = infos;
+
+
 	return &infos;
 }
 
