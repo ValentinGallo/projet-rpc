@@ -6,19 +6,35 @@
 
 #include "projet.h"
 
-personne liste_personnes[50]; 
-outil outils[50];
-location locations[50];
+personne liste_personnes[5];
+int nbPersonnes;
+outil outils[5];
+int nbOutils;
+location locations[5];
+int nbLocations;
+paiement paiements[5];
+int nbPaiements;
 
 int *
 init_1_svc(void *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
+	//Initialisations des nb tableaux à 0
+	nbPersonnes = 0;
+	nbOutils = 0;
+	nbLocations = 0;
+
 	//Ajout d'un outil
-	outil outil_1 = {id:0, nom:"Marteau",anomalie:0};
-	outils[0] = outil_1;
-	printf("init");
+	outil outil_1 = {id:nbOutils, nom:"Marteau",anomalie:0};
+	outils[nbOutils] = outil_1;
+	nbOutils++;
+
+	//Ajout d'une methode de paiement
+	paiement paiement_1 = {id:nbPaiements,nom:"Paypal"};
+	paiements[nbPaiements] = paiement_1;
+	nbPaiements++;
+
 	result = 1;
 	return &result;
 }
@@ -52,12 +68,10 @@ lister_outils_1_svc(param_date *argp, struct svc_req *rqstp)
 	static tab_outils result;
 	result.nbOutils = 0;
 	
-	for (int i = 0; i < result.nbOutils; i++)
+	for (int i = 0; i < nbOutils; i++)
 	{
-		if(outils[i].nom != NULL){
-			result.listeOutils[i] = outils[i];
-			result.nbOutils++;
-		}
+		result.listeOutils[i] = outils[i];
+		result.nbOutils++;
 	}
 
 	return &result;
@@ -82,13 +96,15 @@ louer_outil_1_svc(param_outil *argp, struct svc_req *rqstp)
 
 	//Creation de la location
 	location la_location;
-    la_location.id = 0; //A changer en fonction de l'emplacement
+    la_location.id = nbLocations; //A changer en fonction de l'emplacement
 	la_location.id_personne = argp->id_adherent;
 	la_location.id_outil = argp->id_outil;
 	la_location.date_debut = argp->date_debut;
 	la_location.date_fin = argp->date_fin;
 	la_location.type_location = 1;
-	locations[0] = la_location; //A changer en fonction de l'emplacement
+
+	locations[nbLocations] = la_location; //A changer en fonction de l'emplacement
+	nbLocations++;
 	return &result;
 }
 
@@ -126,7 +142,7 @@ afficher_tarifs_postes_1_svc(void *argp, struct svc_req *rqstp)
 {
 	static informations infos;
 	strcpy(infos.tarifs,"10€ pour 1h, 30€ pour 4h, et 50€ pour 8h");
-	strcpy(infos.horraires,"les jours de la semaine de 12h à 14h ou de 17h à 19h, et tous les samedis de 14h à 18h");
+	strcpy(infos.horraires,"les jours de la semaine 12h à 14h ou 17h à 19h");
 	return &infos;
 }
 
@@ -136,7 +152,11 @@ afficher_mode_paiement_1_svc(void *argp, struct svc_req *rqstp)
 	static tab_paiements  result;
 
 	result.nbPaiements = 0;
-
+	for (int i = 0; i < nbPaiements; i++)
+	{
+		result.listePaiements[i] = paiements[i];
+		result.nbPaiements++;
+	}
 	return &result;
 }
 

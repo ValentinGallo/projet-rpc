@@ -68,10 +68,10 @@ xdr_personne (XDR *xdrs, personne *objp)
 	int i;
 	 if (!xdr_int (xdrs, &objp->id))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->prenom, 255,
+	 if (!xdr_vector (xdrs, (char *)objp->prenom, 10,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->nom, 255,
+	 if (!xdr_vector (xdrs, (char *)objp->nom, 10,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->adherent))
@@ -87,7 +87,7 @@ xdr_outil (XDR *xdrs, outil *objp)
 	int i;
 	 if (!xdr_int (xdrs, &objp->id))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->nom, 255,
+	 if (!xdr_vector (xdrs, (char *)objp->nom, 10,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->anomalie))
@@ -103,10 +103,10 @@ xdr_poste (XDR *xdrs, poste *objp)
 	int i;
 	 if (!xdr_int (xdrs, &objp->id))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->nom, 255,
+	 if (!xdr_vector (xdrs, (char *)objp->nom, 10,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->description, 255,
+	 if (!xdr_vector (xdrs, (char *)objp->description, 10,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	return TRUE;
@@ -241,7 +241,7 @@ xdr_paiement (XDR *xdrs, paiement *objp)
 	int i;
 	 if (!xdr_int (xdrs, &objp->id))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->nom, 255,
+	 if (!xdr_vector (xdrs, (char *)objp->nom, 10,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	return TRUE;
@@ -265,7 +265,7 @@ xdr_tab_outils (XDR *xdrs, tab_outils *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->listeOutils, 50,
+	 if (!xdr_vector (xdrs, (char *)objp->listeOutils, 5,
 		sizeof (outil), (xdrproc_t) xdr_outil))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nbOutils))
@@ -279,7 +279,7 @@ xdr_tab_postes (XDR *xdrs, tab_postes *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->listePostes, 50,
+	 if (!xdr_vector (xdrs, (char *)objp->listePostes, 5,
 		sizeof (poste), (xdrproc_t) xdr_poste))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nbPostes))
@@ -293,7 +293,7 @@ xdr_tab_paiements (XDR *xdrs, tab_paiements *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->listePaiements, 50,
+	 if (!xdr_vector (xdrs, (char *)objp->listePaiements, 5,
 		sizeof (paiement), (xdrproc_t) xdr_paiement))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nbPaiements))
@@ -307,10 +307,10 @@ xdr_informations (XDR *xdrs, informations *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->tarifs, 255,
+	 if (!xdr_vector (xdrs, (char *)objp->tarifs, 50,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->horraires, 255,
+	 if (!xdr_vector (xdrs, (char *)objp->horraires, 50,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	return TRUE;

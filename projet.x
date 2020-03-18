@@ -7,21 +7,21 @@ struct date{
 
 struct personne{
     int id;
-    char prenom[255];
-    char nom[255];
+    char prenom[10];
+    char nom[10];
     int adherent;
 };
 
 struct outil{
     int id;
-    char nom[255];
+    char nom[10];
     int anomalie;
 };
 
 struct poste{
     int id;
-    char nom[255];
-    char description[255];
+    char nom[10];
+    char description[10];
 };
 
 struct location{
@@ -55,7 +55,7 @@ struct param_poste{
 
 struct paiement{
     int id;
-    char nom[255];
+    char nom[10];
 };
 
 struct param_paiement{
@@ -64,23 +64,23 @@ struct param_paiement{
 };
 
 struct tab_outils{
-	outil listeOutils[50];
+	outil listeOutils[5];
 	int nbOutils;
 };
 
 struct tab_postes{
-	poste listePostes[50];
+	poste listePostes[5];
 	int nbPostes;
 };
 
 struct tab_paiements{
-    paiement listePaiements[50];
+    paiement listePaiements[5];
     int nbPaiements;
 };
 
 struct informations{
-    char tarifs[255];
-    char horraires[255];
+    char tarifs[50];
+    char horraires[50];
 };
 
 
