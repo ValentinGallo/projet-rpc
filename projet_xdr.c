@@ -119,7 +119,7 @@ xdr_location (XDR *xdrs, location *objp)
 
 
 	if (xdrs->x_op == XDR_ENCODE) {
-		buf = XDR_INLINE (xdrs, 3 * BYTES_PER_XDR_UNIT);
+		buf = XDR_INLINE (xdrs, 5 * BYTES_PER_XDR_UNIT);
 		if (buf == NULL) {
 			 if (!xdr_int (xdrs, &objp->id))
 				 return FALSE;
@@ -127,11 +127,17 @@ xdr_location (XDR *xdrs, location *objp)
 				 return FALSE;
 			 if (!xdr_int (xdrs, &objp->id_outil))
 				 return FALSE;
+			 if (!xdr_int (xdrs, &objp->type_location))
+				 return FALSE;
+			 if (!xdr_int (xdrs, &objp->payer))
+				 return FALSE;
 
 		} else {
 		IXDR_PUT_LONG(buf, objp->id);
 		IXDR_PUT_LONG(buf, objp->id_personne);
 		IXDR_PUT_LONG(buf, objp->id_outil);
+		IXDR_PUT_LONG(buf, objp->type_location);
+		IXDR_PUT_LONG(buf, objp->payer);
 		}
 		 if (!xdr_date (xdrs, &objp->date_debut))
 			 return FALSE;
@@ -139,7 +145,7 @@ xdr_location (XDR *xdrs, location *objp)
 			 return FALSE;
 		return TRUE;
 	} else if (xdrs->x_op == XDR_DECODE) {
-		buf = XDR_INLINE (xdrs, 3 * BYTES_PER_XDR_UNIT);
+		buf = XDR_INLINE (xdrs, 5 * BYTES_PER_XDR_UNIT);
 		if (buf == NULL) {
 			 if (!xdr_int (xdrs, &objp->id))
 				 return FALSE;
@@ -147,11 +153,17 @@ xdr_location (XDR *xdrs, location *objp)
 				 return FALSE;
 			 if (!xdr_int (xdrs, &objp->id_outil))
 				 return FALSE;
+			 if (!xdr_int (xdrs, &objp->type_location))
+				 return FALSE;
+			 if (!xdr_int (xdrs, &objp->payer))
+				 return FALSE;
 
 		} else {
 		objp->id = IXDR_GET_LONG(buf);
 		objp->id_personne = IXDR_GET_LONG(buf);
 		objp->id_outil = IXDR_GET_LONG(buf);
+		objp->type_location = IXDR_GET_LONG(buf);
+		objp->payer = IXDR_GET_LONG(buf);
 		}
 		 if (!xdr_date (xdrs, &objp->date_debut))
 			 return FALSE;
@@ -165,6 +177,10 @@ xdr_location (XDR *xdrs, location *objp)
 	 if (!xdr_int (xdrs, &objp->id_personne))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->id_outil))
+		 return FALSE;
+	 if (!xdr_int (xdrs, &objp->type_location))
+		 return FALSE;
+	 if (!xdr_int (xdrs, &objp->payer))
 		 return FALSE;
 	 if (!xdr_date (xdrs, &objp->date_debut))
 		 return FALSE;
@@ -239,8 +255,6 @@ xdr_param_paiement (XDR *xdrs, param_paiement *objp)
 	 if (!xdr_int (xdrs, &objp->id_paiement))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->id_location))
-		 return FALSE;
-	 if (!xdr_int (xdrs, &objp->type_location))
 		 return FALSE;
 	return TRUE;
 }
