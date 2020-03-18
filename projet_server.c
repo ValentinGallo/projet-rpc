@@ -8,7 +8,6 @@
 
 personne liste_personnes[50]; 
 outil outils[50];
-informations infos = {tarifs:"10€ pour 1h, 30€ pour 4h, et 50€ pour 8h",horraires:"les jours de la semaine de 12h à 14h ou de 17h à 19h, et tous les samedis de 14h à 18h"};
 
 int *
 init_1_svc(void *argp, struct svc_req *rqstp)
@@ -55,7 +54,7 @@ lister_outils_1_svc(param_date *argp, struct svc_req *rqstp)
 	for (int i = 0; i < result.nbOutils; i++)
 	{
 		if(outils[i].nom != NULL){
-			result.listoutils[i] = outils[i];
+			result.listeOutils[i] = outils[i];
 			result.nbOutils++;
 		}
 	}
@@ -114,20 +113,20 @@ renouveler_adhesion_1_svc(personne *argp, struct svc_req *rqstp)
 informations *
 afficher_tarifs_postes_1_svc(void *argp, struct svc_req *rqstp)
 {
-	//static informations  result = infos;
-
-
+	static informations infos;
+	strcpy(infos.tarifs,"10€ pour 1h, 30€ pour 4h, et 50€ pour 8h");
+	strcpy(infos.horraires,"les jours de la semaine de 12h à 14h ou de 17h à 19h, et tous les samedis de 14h à 18h");
 	return &infos;
 }
 
-informations *
+tab_paiements *
 afficher_mode_paiement_1_svc(void *argp, struct svc_req *rqstp)
 {
-	static informations  result;
+	static tab_paiements  result;
 
-	/*
-	 * insert server code here
-	 */
+	result.nbPaiements = 0;
+
+	
 
 	return &result;
 }

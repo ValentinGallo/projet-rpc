@@ -14,6 +14,7 @@ geom_prog_1(char *host)
 	int  *resultat;
 	void *vide;
 	tab_outils *outils;
+	tab_paiements *paiements;
 	informations *infos;
 
 	//Informations client
@@ -55,21 +56,30 @@ geom_prog_1(char *host)
 	printf("TARIFS: %s \n",infos->tarifs);
 
 	//Liste outils
-	//date debut = {heure:0,jour:1,mois:1,annee:2020};
-	//date fin = {heure:24,jour:1,mois:1,annee:2020};
-	//param_date dates = {date_debut:debut, date_fin:fin};
-	param_date dates;
+	/*
+	date debut = {heure:0,jour:1,mois:1,annee:2020};
+	date fin = {heure:24,jour:1,mois:1,annee:2020};
+	param_date dates = {date_debut:debut, date_fin:fin};
+
 	outils = lister_outils_1(&dates, clnt); //ERREUR (call failed: RPC: Remote system error)
 	if (outils == (tab_outils *) NULL) {
 
 		clnt_perror (clnt, "call failed");
 	}
 	printf("nb outil : %d",outils->nbOutils);
-	/*
+	
 	printf("Nb outils dispo %d",outils->nbOutils);
 	for(int i = 0;i<outils->nbOutils;i++){
 		printf("Outil %d : %s",i,outils->listoutils[i].nom);
 	}*/
+
+	//Afficher modes de paiements
+	paiements = afficher_mode_paiement_1(vide, clnt);
+	
+	if (paiements == (tab_paiements *) NULL) {
+
+		clnt_perror (clnt, "call failed");
+	}
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */

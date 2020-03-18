@@ -96,7 +96,7 @@ geom_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 
 	case afficher_mode_paiement:
 		_xdr_argument = (xdrproc_t) xdr_void;
-		_xdr_result = (xdrproc_t) xdr_informations;
+		_xdr_result = (xdrproc_t) xdr_tab_paiements;
 		local = (char *(*)(char *, struct svc_req *)) afficher_mode_paiement_1_svc;
 		break;
 

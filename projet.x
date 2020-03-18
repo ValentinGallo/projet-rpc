@@ -63,13 +63,18 @@ struct param_paiement{
 };
 
 struct tab_outils{
-	outil listoutils[50];
+	outil listeOutils[50];
 	int nbOutils;
 };
 
 struct tab_postes{
-	poste listpostes[50];
+	poste listePostes[50];
 	int nbPostes;
+};
+
+struct tab_paiements{
+    paiement listePaiements[50];
+    int nbPaiements;
 };
 
 struct informations{
@@ -89,7 +94,7 @@ program GEOM_PROG {
         int reserver_poste(param_poste) = 7;
         int renouveler_adhesion(personne une_personne) = 8;
         informations afficher_tarifs_postes() = 9;
-        informations afficher_mode_paiement() = 10;
+        tab_paiements afficher_mode_paiement() = 10;
         int effectuer_paiement(param_paiement) = 11;
         int retour_location(int id_location) = 12;
         int signaler_anomalie(outil un_outil) = 13;

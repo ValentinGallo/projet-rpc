@@ -144,15 +144,15 @@ afficher_tarifs_postes_1(void *argp, CLIENT *clnt)
 	return (&clnt_res);
 }
 
-informations *
+tab_paiements *
 afficher_mode_paiement_1(void *argp, CLIENT *clnt)
 {
-	static informations clnt_res;
+	static tab_paiements clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, afficher_mode_paiement,
 		(xdrproc_t) xdr_void, (caddr_t) argp,
-		(xdrproc_t) xdr_informations, (caddr_t) &clnt_res,
+		(xdrproc_t) xdr_tab_paiements, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}
