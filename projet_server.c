@@ -7,20 +7,17 @@
 #include "projet.h"
 
 personne liste_personnes[50]; 
-tab_outils outils[50];
-static informations infos = {tarifs:"10€ pour 1h, 30€ pour 4h, et 50€ pour 8h",horraires:"les jours de la semaine de 12h à 14h ou de 17h à 19h, et tous les samedis de 14h à 18h"};
+outil outils[50];
+informations infos = {tarifs:"10€ pour 1h, 30€ pour 4h, et 50€ pour 8h",horraires:"les jours de la semaine de 12h à 14h ou de 17h à 19h, et tous les samedis de 14h à 18h"};
 
 int *
 init_1_svc(void *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	outils->nbOutils = 0;
-
 	//Ajout d'un outil
-	outil outil_1 = {id:outils->nbOutils, nom:"Marteau",anomalie:0};
-	outils->listoutils[outils->nbOutils] = outil_1;
-	
+	outil outil_1 = {id:0, nom:"Marteau",anomalie:0};
+	outils[0] = outil_1;
 	printf("init");
 	result = 1;
 	return &result;
@@ -52,11 +49,16 @@ renouveler_adherent_1_svc(personne *argp, struct svc_req *rqstp)
 tab_outils *
 lister_outils_1_svc(param_date *argp, struct svc_req *rqstp)
 {
-	tab_outils  result = *outils;
-
-	/*
-	 * insert server code here
-	 */
+	static tab_outils result;
+	result.nbOutils = 0;
+	
+	for (int i = 0; i < result.nbOutils; i++)
+	{
+		if(outils[i].nom != NULL){
+			result.listoutils[i] = outils[i];
+			result.nbOutils++;
+		}
+	}
 
 	return &result;
 }

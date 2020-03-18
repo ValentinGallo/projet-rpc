@@ -48,21 +48,23 @@ geom_prog_1(char *host)
 	else printf("Enregistrement réussie(code : %d) \n",*resultat);
 
 	//Afficher tarif
-	infos = afficher_tarifs_postes_1(vide, clnt); //ERREUR (call failed: RPC: Timed out)
+	infos = afficher_tarifs_postes_1(vide, clnt);
 	if (infos == (informations *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
 	printf("TARIFS: %s \n",infos->tarifs);
 
 	//Liste outils
-	date debut = {heure:0,jour:1,mois:1,annee:2020};
-	date fin = {heure:24,jour:1,mois:1,annee:2020};
-	param_date dates = {date_debut:debut, date_fin:fin};
-	printf("Avant lister_outils_1");
+	//date debut = {heure:0,jour:1,mois:1,annee:2020};
+	//date fin = {heure:24,jour:1,mois:1,annee:2020};
+	//param_date dates = {date_debut:debut, date_fin:fin};
+	param_date dates;
 	outils = lister_outils_1(&dates, clnt); //ERREUR (call failed: RPC: Remote system error)
 	if (outils == (tab_outils *) NULL) {
+
 		clnt_perror (clnt, "call failed");
 	}
+	printf("nb outil : %d",outils->nbOutils);
 	/*
 	printf("Nb outils dispo %d",outils->nbOutils);
 	for(int i = 0;i<outils->nbOutils;i++){
