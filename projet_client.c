@@ -8,7 +8,7 @@
 
 
 void
-geom_prog_1(char *host)
+projet_1(char *host)
 {
 	CLIENT *clnt;
 	int  *resultat;
@@ -25,7 +25,7 @@ geom_prog_1(char *host)
 	client.adherent = 1;
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, GEOM_PROG, GEOM_VERSION_1, "udp");
+	clnt = clnt_create (host, PROJET, GEOM_VERSION_1, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
@@ -60,10 +60,8 @@ geom_prog_1(char *host)
 	date debut = {heure:0,jour:1,mois:1,annee:2020};
 	date fin = {heure:24,jour:1,mois:1,annee:2020};
 	param_date dates = {date_debut:debut, date_fin:fin};
-
 	outils = lister_outils_1(&dates, clnt); //ERREUR (call failed: RPC: Remote system error)
 	if (outils == (tab_outils *) NULL) {
-
 		clnt_perror (clnt, "call failed");
 	}
 	printf("nb outil : %d",outils->nbOutils);
@@ -96,6 +94,6 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	host = argv[1];
-	geom_prog_1 (host);
+	projet_1 (host);
 exit (0);
 }

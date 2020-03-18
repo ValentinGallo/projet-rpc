@@ -89,16 +89,22 @@ struct param_paiement {
 typedef struct param_paiement param_paiement;
 
 struct tab_outils {
-	outil listoutils[50];
+	outil listeOutils[50];
 	int nbOutils;
 };
 typedef struct tab_outils tab_outils;
 
 struct tab_postes {
-	poste listpostes[50];
+	poste listePostes[50];
 	int nbPostes;
 };
 typedef struct tab_postes tab_postes;
+
+struct tab_paiements {
+	paiement listePaiements[50];
+	int nbPaiements;
+};
+typedef struct tab_paiements tab_paiements;
 
 struct informations {
 	char tarifs[255];
@@ -106,7 +112,7 @@ struct informations {
 };
 typedef struct informations informations;
 
-#define GEOM_PROG 0x20000001
+#define PROJET 0x23456789
 #define GEOM_VERSION_1 1
 
 #if defined(__STDC__) || defined(__cplusplus)
@@ -138,8 +144,8 @@ extern  int * renouveler_adhesion_1_svc(personne *, struct svc_req *);
 extern  informations * afficher_tarifs_postes_1(void *, CLIENT *);
 extern  informations * afficher_tarifs_postes_1_svc(void *, struct svc_req *);
 #define afficher_mode_paiement 10
-extern  informations * afficher_mode_paiement_1(void *, CLIENT *);
-extern  informations * afficher_mode_paiement_1_svc(void *, struct svc_req *);
+extern  tab_paiements * afficher_mode_paiement_1(void *, CLIENT *);
+extern  tab_paiements * afficher_mode_paiement_1_svc(void *, struct svc_req *);
 #define effectuer_paiement 11
 extern  int * effectuer_paiement_1(param_paiement *, CLIENT *);
 extern  int * effectuer_paiement_1_svc(param_paiement *, struct svc_req *);
@@ -149,7 +155,7 @@ extern  int * retour_location_1_svc(int *, struct svc_req *);
 #define signaler_anomalie 13
 extern  int * signaler_anomalie_1(outil *, CLIENT *);
 extern  int * signaler_anomalie_1_svc(outil *, struct svc_req *);
-extern int geom_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
+extern int projet_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
 #define INIT 1
@@ -180,8 +186,8 @@ extern  int * renouveler_adhesion_1_svc();
 extern  informations * afficher_tarifs_postes_1();
 extern  informations * afficher_tarifs_postes_1_svc();
 #define afficher_mode_paiement 10
-extern  informations * afficher_mode_paiement_1();
-extern  informations * afficher_mode_paiement_1_svc();
+extern  tab_paiements * afficher_mode_paiement_1();
+extern  tab_paiements * afficher_mode_paiement_1_svc();
 #define effectuer_paiement 11
 extern  int * effectuer_paiement_1();
 extern  int * effectuer_paiement_1_svc();
@@ -191,7 +197,7 @@ extern  int * retour_location_1_svc();
 #define signaler_anomalie 13
 extern  int * signaler_anomalie_1();
 extern  int * signaler_anomalie_1_svc();
-extern int geom_prog_1_freeresult ();
+extern int projet_1_freeresult ();
 #endif /* K&R C */
 
 /* the xdr functions */
@@ -209,6 +215,7 @@ extern  bool_t xdr_paiement (XDR *, paiement*);
 extern  bool_t xdr_param_paiement (XDR *, param_paiement*);
 extern  bool_t xdr_tab_outils (XDR *, tab_outils*);
 extern  bool_t xdr_tab_postes (XDR *, tab_postes*);
+extern  bool_t xdr_tab_paiements (XDR *, tab_paiements*);
 extern  bool_t xdr_informations (XDR *, informations*);
 
 #else /* K&R C */
@@ -224,6 +231,7 @@ extern bool_t xdr_paiement ();
 extern bool_t xdr_param_paiement ();
 extern bool_t xdr_tab_outils ();
 extern bool_t xdr_tab_postes ();
+extern bool_t xdr_tab_paiements ();
 extern bool_t xdr_informations ();
 
 #endif /* K&R C */

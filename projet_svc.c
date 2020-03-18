@@ -17,7 +17,7 @@
 #endif
 
 static void
-geom_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
+projet_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
 		personne enregistrer_adherent_1_arg;
@@ -143,15 +143,15 @@ main (int argc, char **argv)
 {
 	register SVCXPRT *transp;
 
-	pmap_unset (GEOM_PROG, GEOM_VERSION_1);
+	pmap_unset (PROJET, GEOM_VERSION_1);
 
 	transp = svcudp_create(RPC_ANYSOCK);
 	if (transp == NULL) {
 		fprintf (stderr, "%s", "cannot create udp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, GEOM_PROG, GEOM_VERSION_1, geom_prog_1, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (GEOM_PROG, GEOM_VERSION_1, udp).");
+	if (!svc_register(transp, PROJET, GEOM_VERSION_1, projet_1, IPPROTO_UDP)) {
+		fprintf (stderr, "%s", "unable to register (PROJET, GEOM_VERSION_1, udp).");
 		exit(1);
 	}
 
@@ -160,8 +160,8 @@ main (int argc, char **argv)
 		fprintf (stderr, "%s", "cannot create tcp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, GEOM_PROG, GEOM_VERSION_1, geom_prog_1, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (GEOM_PROG, GEOM_VERSION_1, tcp).");
+	if (!svc_register(transp, PROJET, GEOM_VERSION_1, projet_1, IPPROTO_TCP)) {
+		fprintf (stderr, "%s", "unable to register (PROJET, GEOM_VERSION_1, tcp).");
 		exit(1);
 	}
 
