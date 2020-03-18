@@ -28,6 +28,8 @@ struct location{
     int id;
     int id_personne;
     int id_outil;
+    int type_location;
+    int payer;
     date date_debut;
     date date_fin;
 };
@@ -59,7 +61,6 @@ struct paiement{
 struct param_paiement{
     int id_paiement;
     int id_location;
-    int type_location;
 };
 
 struct tab_outils{

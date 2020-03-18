@@ -8,6 +8,7 @@
 
 personne liste_personnes[50]; 
 outil outils[50];
+location locations[50];
 
 int *
 init_1_svc(void *argp, struct svc_req *rqstp)
@@ -27,10 +28,9 @@ enregistrer_adherent_1_svc(personne *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
-
+	liste_personnes[argp->id] = *argp;
+	printf("enregistrement");
+	result = 1;
 	return &result;
 }
 
@@ -80,10 +80,15 @@ louer_outil_1_svc(param_outil *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
-
+	//Creation de la location
+	location la_location;
+    la_location.id = 0; //A changer en fonction de l'emplacement
+	la_location.id_personne = argp->id_adherent;
+	la_location.id_outil = argp->id_outil;
+	la_location.date_debut = argp->date_debut;
+	la_location.date_fin = argp->date_fin;
+	la_location.type_location = 1;
+	locations[0] = la_location; //A changer en fonction de l'emplacement
 	return &result;
 }
 
@@ -92,10 +97,15 @@ reserver_poste_1_svc(param_poste *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
-
+	//Creation de la location
+	location la_location;
+    la_location.id = 0; //A changer en fonction de l'emplacement
+	la_location.id_personne = argp->id_adherent;
+	la_location.id_outil = argp->id_poste;
+	la_location.date_debut = argp->date_debut;
+	la_location.date_fin = argp->date_fin;
+	la_location.type_location = 2;
+	locations[0] = la_location; //A changer en fonction de l'emplacement
 	return &result;
 }
 
@@ -127,8 +137,6 @@ afficher_mode_paiement_1_svc(void *argp, struct svc_req *rqstp)
 
 	result.nbPaiements = 0;
 
-	
-
 	return &result;
 }
 
@@ -137,10 +145,8 @@ effectuer_paiement_1_svc(param_paiement *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
-
+	locations[argp->id_location].payer = 1;
+	result = 1;
 	return &result;
 }
 
@@ -161,9 +167,7 @@ signaler_anomalie_1_svc(outil *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
-
+	outils[argp->id].anomalie = 1;
+	result = 1;
 	return &result;
 }
