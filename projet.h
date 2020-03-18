@@ -50,6 +50,7 @@ struct location {
 	int id_outil;
 	int type_location;
 	int payer;
+	int retourner;
 	date date_debut;
 	date date_fin;
 };
@@ -154,8 +155,8 @@ extern  int * effectuer_paiement_1_svc(param_paiement *, struct svc_req *);
 extern  int * retour_location_1(int *, CLIENT *);
 extern  int * retour_location_1_svc(int *, struct svc_req *);
 #define signaler_anomalie 13
-extern  int * signaler_anomalie_1(outil *, CLIENT *);
-extern  int * signaler_anomalie_1_svc(outil *, struct svc_req *);
+extern  int * signaler_anomalie_1(int *, CLIENT *);
+extern  int * signaler_anomalie_1_svc(int *, struct svc_req *);
 extern int projet_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */

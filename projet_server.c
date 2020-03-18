@@ -102,6 +102,8 @@ louer_outil_1_svc(param_outil *argp, struct svc_req *rqstp)
 	la_location.date_debut = argp->date_debut;
 	la_location.date_fin = argp->date_fin;
 	la_location.type_location = 1;
+	la_location.retourner = 0;
+	la_location.payer = 0;
 
 	locations[nbLocations] = la_location; //A changer en fonction de l'emplacement
 	nbLocations++;
@@ -175,19 +177,23 @@ retour_location_1_svc(int *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
+	for (int i = 0; i < nbLocations; i++)
+	{
+		if(locations[i].id_outil == *argp){
+			locations[i].retourner == 1;
+		}
+	}
+	
 
 	return &result;
 }
 
 int *
-signaler_anomalie_1_svc(outil *argp, struct svc_req *rqstp)
+signaler_anomalie_1_svc(int *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	outils[argp->id].anomalie = 1;
+	outils[*argp].anomalie = 1;
 	result = 1;
 	return &result;
 }

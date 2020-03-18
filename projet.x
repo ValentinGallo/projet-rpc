@@ -30,6 +30,7 @@ struct location{
     int id_outil;
     int type_location;
     int payer;
+    int retourner;
     date date_debut;
     date date_fin;
 };
@@ -98,6 +99,6 @@ program PROJET {
         tab_paiements afficher_mode_paiement() = 10;
         int effectuer_paiement(param_paiement) = 11;
         int retour_location(int) = 12;
-        int signaler_anomalie(outil) = 13;
+        int signaler_anomalie(int) = 13;
 	} = 1;
 } = 0x23456789;

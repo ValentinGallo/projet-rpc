@@ -82,7 +82,7 @@ projet_1(char *host)
 	}
 	printf("/////////////////////////////////////////////////////////////////// \n");
 
-	//Effectuer paiement
+	//Effectuer paiement 
 	param_paiement info_paiement;
 	info_paiement.id_location = 0; //Location d'un marteau
 	info_paiement.id_paiement = 0; //Paypal
@@ -91,6 +91,22 @@ projet_1(char *host)
 		clnt_perror (clnt, "call failed");
 	}
 	else printf("Paiement réussie avec %s\n",paiements->listePaiements[info_paiement.id_paiement].nom);
+
+	//Retour Outil
+	int id_outil = 0;
+	resultat = retour_location_1(&id_outil, clnt);
+	if (resultat == (int *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	else printf("Retour de l'outil %s réussie\n",outils->listeOutils[id_outil].nom);
+
+	//Signalement d'une anomalie
+	id_outil = 0;
+	resultat = signaler_anomalie_1(&id_outil, clnt);
+	if (resultat == (int *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	else printf("Une anomalie à bien été signalé sur l'outil %s \n",outils->listeOutils[id_outil].nom); 
 
 #ifndef	DEBUG
 	clnt_destroy (clnt);
