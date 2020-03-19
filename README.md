@@ -11,7 +11,7 @@ int enregistrer_adherent(personne); //Renvoie l'id de l'adhérent
 ```
 2 - lister l'ensemble des outils
 ```c
-tab_outils lister_outils(param_date);
+tab_outils lister_outils(int); //Paramètre : 0 pour tous les outils | 1 seulement ceux disponibles
 ```
 3 - louer un outil
 ```c
@@ -91,15 +91,24 @@ struct poste{
 };
 ```
 
-- Une location (outil ou poste) :
+- Une location (outil) :
 ```c
 struct location{
     int id;
     int id_personne;
     int id_outil;
-    int type_location;
     int payer;
     int retourner;
+};
+```
+
+- Une réservation (poste) :
+```c
+struct reservation{
+    int id;
+    int id_personne;
+    int id_poste;
+    int payer;
     date date_debut;
     date date_fin;
 };
@@ -150,8 +159,6 @@ struct param_poste{
 struct param_outil{
     int id_outil;
     int id_adherent;
-    date date_debut;
-    date date_fin;
 };
 ```
 ```c

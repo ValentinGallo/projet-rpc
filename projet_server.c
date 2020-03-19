@@ -131,7 +131,7 @@ lister_outils_1_svc(int *argp, struct svc_req *rqstp)
 					outil_deja_louer = 1;
 				}
 			}
-			if(!outil_deja_louer){
+			if(!outil_deja_louer && !outils[i].anomalie){
 				result.listeOutils[i] = outils[i];
 				result.nbOutils++;
 			}
