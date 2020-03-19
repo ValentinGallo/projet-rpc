@@ -89,16 +89,15 @@ program PROJET {
 	version GEOM_VERSION_1 {
         int INIT() = 1;
         int enregistrer_adherent(personne) = 2;
-        int renouveler_adherent(personne) = 3;
+        int renouveler_adhesion(int) = 3;
         tab_outils lister_outils(param_date) = 4;
         tab_postes lister_postes(param_date) = 5;
         int louer_outil(param_outil) = 6;
         int reserver_poste(param_poste) = 7;
-        int renouveler_adhesion(personne) = 8;
-        informations afficher_tarifs_postes() = 9;
-        tab_paiements afficher_mode_paiement() = 10;
-        int effectuer_paiement(param_paiement) = 11;
-        int retour_location(int) = 12;
-        int signaler_anomalie(int) = 13;
+        informations afficher_tarifs_postes() = 8;
+        tab_paiements afficher_mode_paiement() = 9;
+        int effectuer_paiement(param_paiement) = 10;
+        int retour_location(int) = 11;
+        int signaler_anomalie(int) = 12;
 	} = 1;
 } = 0x23456789;

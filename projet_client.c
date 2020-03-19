@@ -73,6 +73,7 @@ projet_1(char *host)
 	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
+	if(*resultat == -1) printf("Location impossible vous n'êtes pas adhérent\n");
 	else printf("Location réussie de '%s' (id de la location : %d)\n",outils->listeOutils[info_location.id_outil].nom,*resultat);
 
 	//Liste paiements (Etape 4)
@@ -147,10 +148,14 @@ projet_1(char *host)
 	info_poste.date_debut = debut;
 	info_poste.date_fin = fin;
 	resultat = reserver_poste_1(&info_poste,clnt);
-		if (resultat == (int *) NULL) {
+	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	printf("Resultat = %d",*resultat);
+	if(*resultat == -1) printf("Location impossible vous n'êtes pas adhérent\n");
+
+	//Renouveler adhérent
+	resultat = renouveler_adhesion_1(nfo_poste.id_adherent,clnt);
+	
 
 #ifndef	DEBUG
 	clnt_destroy (clnt);

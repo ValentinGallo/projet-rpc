@@ -31,7 +31,7 @@ int retour_location(int); //Prend en paramètre l'id de l'outil à renvoyer
 ```
 7 - Signaler un anomalie
 ```c
-int signaler_anomalie(int) //Prend en paramètre l'id de l'outil à renvoyer
+int signaler_anomalie(int) //Prend en paramètre l'id de l'outil à signaler
 ```
 ## Scénario 2 :
 
@@ -39,27 +39,19 @@ int signaler_anomalie(int) //Prend en paramètre l'id de l'outil à renvoyer
 ```c
 informations afficher_tarifs_postes()
 ```
-3 - lister postes de travail dispo (date)
+2 - lister postes de travail dispo (date)
 ```c
 tab_postes lister_postes(param_date)
 ```
-4 - reserver poste (erreur car pas adhérent)
+3 - reserver poste (erreur car pas adhérent)
 ```c
 int reserver_poste(param_poste) //Renvoie l'id de la location ou -1 si location impossible
 ```
-5 - renouveler adhésion
+4 - renouveler adhésion
 ```c
-void renouveler_adherent(personne)
+int renouveler_adherent(personne)
 ```
-6 - Afficher les modes de paiement
-```c
-void afficher_mode_paiement();
-```
-7 - effectuer paiement
-```c
-int effectuer_paiement(param_paiement);
-```
-8 - reserver poste (validé car adhérent)
+5 - reserver poste (validé car adhérent)
 ```c
 int reserver_poste(param_poste) //Renvoie l'id de la location ou -1 si location impossible
 ```
