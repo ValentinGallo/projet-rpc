@@ -28,12 +28,18 @@ struct location{
     int id;
     int id_personne;
     int id_outil;
-    int type_location;
     int payer;
     int retourner;
+};
+
+struct reservation{
+    int id;
+    int id_personne;
+    int id_poste;
+    int payer;
     date date_debut;
     date date_fin;
-};
+}
 
 struct param_date{
     date date_debut;
@@ -43,8 +49,6 @@ struct param_date{
 struct param_outil{
     int id_outil;
     int id_adherent;
-    date date_debut;
-    date date_fin;
 };
 
 struct param_poste{
@@ -90,7 +94,7 @@ program PROJET {
         int INIT() = 1;
         int enregistrer_adherent(personne) = 2;
         int renouveler_adhesion(int) = 3;
-        tab_outils lister_outils(param_date) = 4;
+        tab_outils lister_outils(int) = 4;
         tab_postes lister_postes(param_date) = 5;
         int louer_outil(param_outil) = 6;
         int reserver_poste(param_poste) = 7;

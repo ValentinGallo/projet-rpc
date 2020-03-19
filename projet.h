@@ -110,7 +110,7 @@ typedef struct tab_paiements tab_paiements;
 
 struct informations {
 	char tarifs[50];
-	char horraires[50];
+	char horaires[50];
 };
 typedef struct informations informations;
 
@@ -139,9 +139,9 @@ extern  int * louer_outil_1_svc(param_outil *, struct svc_req *);
 #define reserver_poste 7
 extern  int * reserver_poste_1(param_poste *, CLIENT *);
 extern  int * reserver_poste_1_svc(param_poste *, struct svc_req *);
-#define afficher_tarifs_postes 8
-extern  informations * afficher_tarifs_postes_1(void *, CLIENT *);
-extern  informations * afficher_tarifs_postes_1_svc(void *, struct svc_req *);
+#define tarifs_horaires 8
+extern  informations * tarifs_horaires_1(void *, CLIENT *);
+extern  informations * tarifs_horaires_1_svc(void *, struct svc_req *);
 #define afficher_mode_paiement 9
 extern  tab_paiements * afficher_mode_paiement_1(void *, CLIENT *);
 extern  tab_paiements * afficher_mode_paiement_1_svc(void *, struct svc_req *);
@@ -178,9 +178,9 @@ extern  int * louer_outil_1_svc();
 #define reserver_poste 7
 extern  int * reserver_poste_1();
 extern  int * reserver_poste_1_svc();
-#define afficher_tarifs_postes 8
-extern  informations * afficher_tarifs_postes_1();
-extern  informations * afficher_tarifs_postes_1_svc();
+#define tarifs_horaires 8
+extern  informations * tarifs_horaires_1();
+extern  informations * tarifs_horaires_1_svc();
 #define afficher_mode_paiement 9
 extern  tab_paiements * afficher_mode_paiement_1();
 extern  tab_paiements * afficher_mode_paiement_1_svc();

@@ -318,7 +318,7 @@ xdr_informations (XDR *xdrs, informations *objp)
 	 if (!xdr_vector (xdrs, (char *)objp->tarifs, 50,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->horraires, 50,
+	 if (!xdr_vector (xdrs, (char *)objp->horaires, 50,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	return TRUE;

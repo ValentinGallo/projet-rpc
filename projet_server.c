@@ -6,15 +6,17 @@
 
 #include "projet.h"
 
-personne liste_personnes[5];
+personne liste_personnes[5]; //Liste des personnes
 int nbPersonnes;
-outil outils[5];
+outil outils[5]; //Liste des outils
 int nbOutils;
-poste postes[5];
+poste postes[5]; //Liste des postes
 int nbPostes;
-location locations[5];
+location locations[5]; //Locations d'outils
 int nbLocations;
-paiement paiements[5];
+location reservations[5]; //Reservations de postes
+int nbReservations;
+paiement paiements[5]; //Liste des paiements
 int nbPaiements;
 
 int *
@@ -37,14 +39,28 @@ init_1_svc(void *argp, struct svc_req *rqstp)
 	nbPersonnes++;
 
 
-	//Ajout d'un outil
+	//Ajout des outils
 	outil outil_1 = {id:nbOutils, nom:"Marteau",anomalie:0};
 	outils[nbOutils] = outil_1;
 	nbOutils++;
 
+	outil outil_2 = {id:nbOutils, nom:"Tournevis",anomalie:0};
+	outils[nbOutils] = outil_2;
+	nbOutils++;
+
 	//Ajout de postes de travail
-	poste poste_1 = {id:nbPostes, nom:"Poste n°1",description:"3m x 2m"};
+	poste poste_1;
+	poste_1.id = nbPostes;
+	strcpy(poste_1.nom,"Poste 1");
+	strcpy(poste_1.description,"3m x 2m");
 	postes[nbPostes] = poste_1;
+	nbPostes++;
+
+	poste poste_2;
+	poste_2.id = nbPostes;
+	strcpy(poste_2.nom,"Poste 2");
+	strcpy(poste_2.description,"9m x 4m");
+	postes[nbPostes] = poste_2;
 	nbPostes++;
 
 	//Ajout de methodes de paiements
@@ -52,11 +68,20 @@ init_1_svc(void *argp, struct svc_req *rqstp)
 	paiements[nbPaiements] = paiement_1;
 	nbPaiements++;
 
-	paiement paiement_2 = {id:nbPaiements,nom:"C-B"}; //Carte Bancaire
+	paiement paiement_2 = {id:nbPaiements,nom:"CB"}; //Carte Bancaire
 	paiements[nbPaiements] = paiement_2;
 	nbPaiements++;
 
-	//
+	//Ajout d'une location (tournevis)
+	location location_1;
+	location_1.id = nbLocations;
+	location_1.id_outil = 1;
+	location_1.id_personne = 0;
+	location_1.type_location = 1;
+	location_1.payer = 1;
+	location_1.retourner = 0;
+	locations[nbLocations] = location_1;
+	nbLocations++;
 
 	result = 1;
 	return &result;
@@ -87,16 +112,38 @@ renouveler_adhesion_1_svc(int *argp, struct svc_req *rqstp)
 }
 
 tab_outils *
-lister_outils_1_svc(param_date *argp, struct svc_req *rqstp)
+lister_outils_dispo_1_svc(int *argp, struct svc_req *rqstp)
 {
 	static tab_outils result;
 	result.nbOutils = 0;
-	
-	for (int i = 0; i < nbOutils; i++)
-	{
-		result.listeOutils[i] = outils[i];
-		result.nbOutils++;
+
+	//Seulement outils disponibles
+	if(argp == 1) {
+		for (int i = 0; i < nbOutils; i++)
+		{
+			int outil_deja_louer = 0;
+			for(int y = 0;y<nbLocations;y++){
+				if(locations[y].id_outil == i && locations[y].retourner == 0){
+					//Ne pas ajouter à la liste car déjà louer
+					outil_deja_louer = 1;
+				}
+			}
+			if(!outil_deja_louer){
+				result.listeOutils[i] = outils[i];
+				result.nbOutils++;
+			}
+		}
 	}
+	//Tous les outils
+	else{
+		for (int i = 0; i < nbPostes; i++)
+		{
+			result.listePostes[i] = postes[i];
+			result.nbPostes++;
+		}
+	}
+	
+
 
 	return &result;
 }
@@ -127,8 +174,6 @@ louer_outil_1_svc(param_outil *argp, struct svc_req *rqstp)
     la_location.id = nbLocations; //A changer en fonction de l'emplacement
 	la_location.id_personne = argp->id_adherent;
 	la_location.id_outil = argp->id_outil;
-	la_location.date_debut = argp->date_debut;
-	la_location.date_fin = argp->date_fin;
 	la_location.type_location = 1;
 	la_location.retourner = 0;
 	la_location.payer = 0;

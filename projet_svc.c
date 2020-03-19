@@ -81,10 +81,10 @@ projet_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		local = (char *(*)(char *, struct svc_req *)) reserver_poste_1_svc;
 		break;
 
-	case afficher_tarifs_postes:
+	case tarifs_horaires:
 		_xdr_argument = (xdrproc_t) xdr_void;
 		_xdr_result = (xdrproc_t) xdr_informations;
-		local = (char *(*)(char *, struct svc_req *)) afficher_tarifs_postes_1_svc;
+		local = (char *(*)(char *, struct svc_req *)) tarifs_horaires_1_svc;
 		break;
 
 	case afficher_mode_paiement:

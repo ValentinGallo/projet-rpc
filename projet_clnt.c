@@ -115,12 +115,12 @@ reserver_poste_1(param_poste *argp, CLIENT *clnt)
 }
 
 informations *
-afficher_tarifs_postes_1(void *argp, CLIENT *clnt)
+tarifs_horaires_1(void *argp, CLIENT *clnt)
 {
 	static informations clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, afficher_tarifs_postes,
+	if (clnt_call (clnt, tarifs_horaires,
 		(xdrproc_t) xdr_void, (caddr_t) argp,
 		(xdrproc_t) xdr_informations, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
