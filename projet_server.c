@@ -14,7 +14,7 @@ poste postes[5]; //Liste des postes
 int nbPostes;
 location locations[5]; //Locations d'outils
 int nbLocations;
-location reservations[5]; //Reservations de postes
+reservation reservations[5]; //Reservations de postes
 int nbReservations;
 paiement paiements[5]; //Liste des paiements
 int nbPaiements;
@@ -27,7 +27,11 @@ init_1_svc(void *argp, struct svc_req *rqstp)
 	//Initialisations des nb tableaux à 0
 	nbPersonnes = 0;
 	nbOutils = 0;
+	nbPostes = 0;
 	nbLocations = 0;
+	nbReservations = 0;
+	nbPaiements = 0;
+
 
 	//Ajout de personnes
 	personne personne_1;
@@ -77,7 +81,6 @@ init_1_svc(void *argp, struct svc_req *rqstp)
 	location_1.id = nbLocations;
 	location_1.id_outil = 1;
 	location_1.id_personne = 0;
-	location_1.type_location = 1;
 	location_1.payer = 1;
 	location_1.retourner = 0;
 	locations[nbLocations] = location_1;
@@ -112,13 +115,13 @@ renouveler_adhesion_1_svc(int *argp, struct svc_req *rqstp)
 }
 
 tab_outils *
-lister_outils_dispo_1_svc(int *argp, struct svc_req *rqstp)
+lister_outils_1_svc(int *argp, struct svc_req *rqstp)
 {
 	static tab_outils result;
 	result.nbOutils = 0;
 
 	//Seulement outils disponibles
-	if(argp == 1) {
+	if(*argp == 1) {
 		for (int i = 0; i < nbOutils; i++)
 		{
 			int outil_deja_louer = 0;
@@ -138,8 +141,8 @@ lister_outils_dispo_1_svc(int *argp, struct svc_req *rqstp)
 	else{
 		for (int i = 0; i < nbPostes; i++)
 		{
-			result.listePostes[i] = postes[i];
-			result.nbPostes++;
+			result.listeOutils[i] = outils[i];
+			result.nbOutils++;
 		}
 	}
 	
@@ -151,6 +154,7 @@ lister_outils_dispo_1_svc(int *argp, struct svc_req *rqstp)
 tab_postes *
 lister_postes_1_svc(param_date *argp, struct svc_req *rqstp)
 {
+	//A FINIR RECHERCHE EN FONCTION DES DATES ETC
 	static tab_postes  result;
 	result.nbPostes = 0;
 
@@ -174,7 +178,6 @@ louer_outil_1_svc(param_outil *argp, struct svc_req *rqstp)
     la_location.id = nbLocations; //A changer en fonction de l'emplacement
 	la_location.id_personne = argp->id_adherent;
 	la_location.id_outil = argp->id_outil;
-	la_location.type_location = 1;
 	la_location.retourner = 0;
 	la_location.payer = 0;
 
@@ -194,17 +197,18 @@ reserver_poste_1_svc(param_poste *argp, struct svc_req *rqstp)
 	}
 	else
 	{
-		//Creation de la location
-		location la_location;
-		la_location.id = nbLocations;
-		la_location.id_personne = argp->id_adherent;
-		la_location.id_outil = argp->id_poste;
-		la_location.date_debut = argp->date_debut;
-		la_location.date_fin = argp->date_fin;
-		la_location.type_location = 2;
-		locations[nbLocations] = la_location;
+		//Creation de la reservation
+		reservation la_reservation;
+		la_reservation.id = nbReservations;
+		la_reservation.id_personne = argp->id_adherent;
+		la_reservation.id_poste = argp->id_poste;
+		la_reservation.date_debut = argp->date_debut;
+		la_reservation.date_fin = argp->date_fin;
+		reservations[nbReservations] = la_reservation;
+		nbReservations++;
 
-		result = la_location.id = nbLocations;
+		result = la_reservation.id;
+		
 	}
 	
 

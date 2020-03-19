@@ -39,7 +39,7 @@ struct reservation{
     int payer;
     date date_debut;
     date date_fin;
-}
+};
 
 struct param_date{
     date date_debut;

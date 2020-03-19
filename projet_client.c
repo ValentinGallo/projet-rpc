@@ -120,10 +120,13 @@ projet_1(char *host)
 	else printf("- [ETAPE 1] Tarifs : %s\n",infos->tarifs);
 
 	//Lister postes de travail dispo (Etape 2)
+	date debut;
 	debut.heure = 0; //Date debut 03/01/2020 00:00
 	debut.jour = 3;
+	date fin;
 	fin.heure = 2; //Date fin 03/01/2020 00:00
 	fin.jour = 4;
+	param_date dates;
 	dates.date_debut = debut;
 	dates.date_fin = fin;
 
@@ -131,7 +134,7 @@ projet_1(char *host)
 	if (postes == (tab_postes *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	printf("- [ETAPE 2] ]///////// Liste Postes(%d dispo)  ]/////////\n",postes->nbPostes);
+	printf("- [ETAPE 2] ]///////// Liste Postes(%d dispo)  //////////\n",postes->nbPostes);
 	for(int i = 0;i<postes->nbPostes;i++){
 		printf("> %s : %s (id : %d)\n",postes->listePostes[i].nom,postes->listePostes[i].description,postes->listePostes[i].id);
 	}

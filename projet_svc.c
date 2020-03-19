@@ -22,7 +22,7 @@ projet_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	union {
 		personne enregistrer_adherent_1_arg;
 		int renouveler_adhesion_1_arg;
-		param_date lister_outils_1_arg;
+		int lister_outils_1_arg;
 		param_date lister_postes_1_arg;
 		param_outil louer_outil_1_arg;
 		param_poste reserver_poste_1_arg;
@@ -58,7 +58,7 @@ projet_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		break;
 
 	case lister_outils:
-		_xdr_argument = (xdrproc_t) xdr_param_date;
+		_xdr_argument = (xdrproc_t) xdr_int;
 		_xdr_result = (xdrproc_t) xdr_tab_outils;
 		local = (char *(*)(char *, struct svc_req *)) lister_outils_1_svc;
 		break;

@@ -48,13 +48,20 @@ struct location {
 	int id;
 	int id_personne;
 	int id_outil;
-	int type_location;
 	int payer;
 	int retourner;
+};
+typedef struct location location;
+
+struct reservation {
+	int id;
+	int id_personne;
+	int id_poste;
+	int payer;
 	date date_debut;
 	date date_fin;
 };
-typedef struct location location;
+typedef struct reservation reservation;
 
 struct param_date {
 	date date_debut;
@@ -65,8 +72,6 @@ typedef struct param_date param_date;
 struct param_outil {
 	int id_outil;
 	int id_adherent;
-	date date_debut;
-	date date_fin;
 };
 typedef struct param_outil param_outil;
 
@@ -128,8 +133,8 @@ extern  int * enregistrer_adherent_1_svc(personne *, struct svc_req *);
 extern  int * renouveler_adhesion_1(int *, CLIENT *);
 extern  int * renouveler_adhesion_1_svc(int *, struct svc_req *);
 #define lister_outils 4
-extern  tab_outils * lister_outils_1(param_date *, CLIENT *);
-extern  tab_outils * lister_outils_1_svc(param_date *, struct svc_req *);
+extern  tab_outils * lister_outils_1(int *, CLIENT *);
+extern  tab_outils * lister_outils_1_svc(int *, struct svc_req *);
 #define lister_postes 5
 extern  tab_postes * lister_postes_1(param_date *, CLIENT *);
 extern  tab_postes * lister_postes_1_svc(param_date *, struct svc_req *);
@@ -204,6 +209,7 @@ extern  bool_t xdr_personne (XDR *, personne*);
 extern  bool_t xdr_outil (XDR *, outil*);
 extern  bool_t xdr_poste (XDR *, poste*);
 extern  bool_t xdr_location (XDR *, location*);
+extern  bool_t xdr_reservation (XDR *, reservation*);
 extern  bool_t xdr_param_date (XDR *, param_date*);
 extern  bool_t xdr_param_outil (XDR *, param_outil*);
 extern  bool_t xdr_param_poste (XDR *, param_poste*);
@@ -220,6 +226,7 @@ extern bool_t xdr_personne ();
 extern bool_t xdr_outil ();
 extern bool_t xdr_poste ();
 extern bool_t xdr_location ();
+extern bool_t xdr_reservation ();
 extern bool_t xdr_param_date ();
 extern bool_t xdr_param_outil ();
 extern bool_t xdr_param_poste ();
