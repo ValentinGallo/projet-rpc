@@ -7,7 +7,7 @@ Projet RPC-GEN de Valentin GALLO et Killian Le Corre
 
 1 - Enregistrer un adhérent
 ```c
-void enregistrer_adherent(personne une_personne);
+int enregistrer_adherent(personne); //Renvoie l'id de l'adhérent
 ```
 2 - lister l'ensemble des outils
 ```c
@@ -15,11 +15,11 @@ tab_outils lister_outils(param_date);
 ```
 3 - louer un outil
 ```c
-int louer_outil(param_outil);
+int louer_outil(param_outil); //Renvoie l'id de la location ou -1 si location impossible
 ```
 4 - Afficher les modes de paiement
 ```c
-void afficher_mode_paiement();
+tab_paiements afficher_mode_paiement();
 ```
 5 - effectuer paiement
 ```c
@@ -27,17 +27,17 @@ int effectuer_paiement(param_paiement);
 ```
 6 - Retour Outils
 ```c
-int effectuer_paiement(param_paiement);
+int retour_location(int); //Prend en paramètre l'id de l'outil à renvoyer
 ```
 7 - Signaler un anomalie
 ```c
-int signaler_anomalie(outil un_outil)
+int signaler_anomalie(int) //Prend en paramètre l'id de l'outil à renvoyer
 ```
 ## Scénario 2 :
 
 1 - afficher tarifs réservations/horraires
 ```c
-void afficher_tarifs_postes()
+informations afficher_tarifs_postes()
 ```
 3 - lister postes de travail dispo (date)
 ```c
@@ -45,11 +45,11 @@ tab_postes lister_postes(param_date)
 ```
 4 - reserver poste (erreur car pas adhérent)
 ```c
-int reserver_poste(param_poste)
+int reserver_poste(param_poste) //Renvoie l'id de la location ou -1 si location impossible
 ```
 5 - renouveler adhésion
 ```c
-void renouveler_adherent(personne une_personne)
+void renouveler_adherent(personne)
 ```
 6 - Afficher les modes de paiement
 ```c
@@ -61,7 +61,7 @@ int effectuer_paiement(param_paiement);
 ```
 8 - reserver poste (validé car adhérent)
 ```c
-int reserver_poste(param_poste)
+int reserver_poste(param_poste) //Renvoie l'id de la location ou -1 si location impossible
 ```
 ## Autres informations
 
@@ -71,9 +71,9 @@ int reserver_poste(param_poste)
 ```c
 struct personne{
     int id;
-    char prenom[255];
-    char nom[255];
-    int adherent; //True or False
+    char prenom[10];
+    char nom[10];
+    int adherent;
 };
 ```
 
@@ -81,8 +81,8 @@ struct personne{
 ```c
 struct outil{
     int id;
-    char nom[255];
-    int anomalie; //True or False
+    char nom[10];
+    int anomalie;
 };
 ```
 
@@ -90,8 +90,8 @@ struct outil{
 ```c
 struct poste{
     int id;
-    char nom[255];
-    char description[255];
+    char nom[10];
+    char description[10];
 };
 ```
 
@@ -100,7 +100,10 @@ struct poste{
 struct location{
     int id;
     int id_personne;
-    int id_outil; //1 si outil, 2 si poste
+    int id_outil;
+    int type_location;
+    int payer;
+    int retourner;
     date date_debut;
     date date_fin;
 };
@@ -120,7 +123,15 @@ struct date{
 ```c
 struct paiement{
     int id;
-    char nom[255];
+    char nom[10];
+};
+```
+
+- Informations :
+```c
+struct informations{
+    char tarifs[50];
+    char horraires[50];
 };
 ```
 
@@ -129,7 +140,6 @@ struct paiement{
 struct param_paiement{
     int id_paiement;
     int id_location;
-    int type_location;
 };
 ```
 ```c
@@ -154,15 +164,24 @@ struct param_date{
     date date_fin;
 };
 ```
+
+## Autres
+
 ```c
 struct tab_outils{
-	outil listoutils[50];
+	outil listeOutils[5];
 	int nbOutils;
 };
 ```
 ```c
 struct tab_postes{
-	poste listpostes[50];
+	poste listePostes[5];
 	int nbPostes;
+};
+```
+```c
+struct tab_paiements{
+    paiement listePaiements[5];
+    int nbPaiements;
 };
 ```

@@ -14,8 +14,10 @@ projet_1(char *host)
 	int  *resultat;
 	void *vide;
 	tab_outils *outils;
+	tab_postes *postes;
 	tab_paiements *paiements;
 	personne adherent;
+	informations *infos;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, PROJET, GEOM_VERSION_1, "udp");
@@ -32,20 +34,22 @@ projet_1(char *host)
 	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	else printf("Initialisation réussie(code : %d) \n",*resultat);
+	else printf("Initialisation réussie(code : %d) \n\n",*resultat);
 
-	//Enregistrer adhérent
-	adherent.id = 0;
+	//Scénario 1 :
+	printf("- Scénario 1 :\n\n");
+
+	//Enregistrer adhérent (Etape 1)
 	strcpy(adherent.prenom,"Jean");
 	strcpy(adherent.nom,"Dupont");
 	adherent.adherent = 1;
-	resultat = enregistrer_adherent_1(&adherent, clnt);
+	resultat = enregistrer_adherent_1(&adherent, clnt); //Retourne l'id de l'adhérent
 	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	else printf("Enregistrement réussie(code : %d) \n",*resultat);
+	else printf("Enregistrement réussie (id de l'adhérent : %d) \n",*resultat);
 
-	//Liste outils
+	//Liste outils (Etape 2)
 	date debut = {heure:0,jour:1,mois:1,annee:2020};
 	date fin = {heure:24,jour:1,mois:1,annee:2020};
 	param_date dates = {date_debut:debut, date_fin:fin};
@@ -59,30 +63,30 @@ projet_1(char *host)
 	}
 	printf("/////////////////////////////////////////////////////////////////// \n");
 
-	//Louer un outil
+	//Louer un outil (Etape 3)
 	param_outil info_location;
 	info_location.date_debut = debut;
 	info_location.date_fin = fin;
 	info_location.id_adherent = adherent.id;
 	info_location.id_outil = 0; //Marteau
-	resultat = louer_outil_1(&info_location, clnt);
+	resultat = louer_outil_1(&info_location, clnt); //Retourne id de la location
 	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	else printf("Location réussie(%s)\n",outils->listeOutils[info_location.id_outil].nom);
+	else printf("Location réussie de '%s' (id de la location : %d)\n",outils->listeOutils[info_location.id_outil].nom,*resultat);
 
-	//Liste paiements
+	//Liste paiements (Etape 4)
 	paiements = afficher_mode_paiement_1(&vide, clnt);
 	if (paiements == (void *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	printf("////////////////////// Liste Paiements(%d dispo) ////////////////////// \n",paiements->nbPaiements);
+	printf("//////////////////// Liste Paiements(%d dispo) ///////////////////// \n",paiements->nbPaiements);
 	for(int i = 0;i<paiements->nbPaiements;i++){
 		printf("- Paiement n°%d : %s(id : %d)\n",i+1,paiements->listePaiements[i].nom,paiements->listePaiements[i].id);
 	}
 	printf("/////////////////////////////////////////////////////////////////// \n");
 
-	//Effectuer paiement 
+	//Effectuer paiement (Etape 5)
 	param_paiement info_paiement;
 	info_paiement.id_location = 0; //Location d'un marteau
 	info_paiement.id_paiement = 0; //Paypal
@@ -92,7 +96,7 @@ projet_1(char *host)
 	}
 	else printf("Paiement réussie avec %s\n",paiements->listePaiements[info_paiement.id_paiement].nom);
 
-	//Retour Outil
+	//Retour Outil (Etape 6)
 	int id_outil = 0;
 	resultat = retour_location_1(&id_outil, clnt);
 	if (resultat == (int *) NULL) {
@@ -100,13 +104,53 @@ projet_1(char *host)
 	}
 	else printf("Retour de l'outil %s réussie\n",outils->listeOutils[id_outil].nom);
 
-	//Signalement d'une anomalie
+	//Signalement d'une anomalie (Etape 7)
 	id_outil = 0;
 	resultat = signaler_anomalie_1(&id_outil, clnt);
 	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
 	else printf("Une anomalie à bien été signalé sur l'outil %s \n",outils->listeOutils[id_outil].nom); 
+
+	//Scénario 2 :
+	printf("\n- Scénario 2 : \n\n");
+
+	//Afficher tarifs postes (Etape 1)
+	infos = afficher_tarifs_postes_1(&vide,clnt);
+	if (infos == (informations *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	else printf("Tarifs : %s\n",infos->tarifs);
+
+	//Lister postes de travail dispo (Etape 2)
+	debut.heure = 0; //Date debut 03/01/2020 00:00
+	debut.jour = 3;
+	fin.heure = 2; //Date fin 03/01/2020 00:00
+	fin.jour = 4;
+	dates.date_debut = debut;
+	dates.date_fin = fin;
+
+	postes = lister_postes_1(&dates, clnt);
+	if (postes == (tab_postes *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	printf("////////////////////// Liste Postes(%d dispo) ////////////////////// \n",postes->nbPostes);
+	for(int i = 0;i<postes->nbPostes;i++){
+		printf("- Poste n°%d : %s (id : %d)\n",i+1,postes->listePostes[i].nom,postes->listePostes[i].id);
+	}
+	printf("/////////////////////////////////////////////////////////////////// \n");
+
+	//Réserver poste (Impossible car pas adhérent)
+	param_poste info_poste;
+	info_poste.id_adherent = 0; //Philippe Hamon (Non adhérent)
+	info_poste.id_poste = 0;
+	info_poste.date_debut = debut;
+	info_poste.date_fin = fin;
+	resultat = reserver_poste_1(&info_poste,clnt);
+		if (resultat == (int *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	printf("Resultat = %d",*resultat);
 
 #ifndef	DEBUG
 	clnt_destroy (clnt);
