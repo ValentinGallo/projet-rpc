@@ -81,7 +81,7 @@ struct tab_paiements{
 
 struct informations{
     char tarifs[50];
-    char horraires[50];
+    char horaires[50];
 };
 
 
@@ -94,7 +94,7 @@ program PROJET {
         tab_postes lister_postes(param_date) = 5;
         int louer_outil(param_outil) = 6;
         int reserver_poste(param_poste) = 7;
-        informations afficher_tarifs_postes() = 8;
+        informations tarifs_horaires() = 8;
         tab_paiements afficher_mode_paiement() = 9;
         int effectuer_paiement(param_paiement) = 10;
         int retour_location(int) = 11;

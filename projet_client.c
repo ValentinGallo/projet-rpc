@@ -117,7 +117,7 @@ projet_1(char *host)
 	printf("\n- Scénario 2 : \n\n");
 
 	//Afficher tarifs postes (Etape 1)
-	infos = afficher_tarifs_postes_1(&vide,clnt);
+	infos = tarifs_horraires_1(&vide,clnt);
 	if (infos == (informations *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
@@ -141,7 +141,14 @@ projet_1(char *host)
 	}
 	printf("/////////////////////////////////////////////////////////////////// \n");
 
-	//Réserver poste (Impossible car pas adhérent)
+	//Afficher horraires postes (Etape 3)
+	infos = tarifs_horaires_1(&vide,clnt);
+	if (infos == (informations *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	else printf("Horaires : %s\n",infos->horaires);
+
+	//Réserver poste (Impossible car pas adhérent)  (Etape 4)
 	param_poste info_poste;
 	info_poste.id_adherent = 0; //Philippe Hamon (Non adhérent)
 	info_poste.id_poste = 0;
@@ -151,10 +158,25 @@ projet_1(char *host)
 	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	if(*resultat == -1) printf("Location impossible vous n'êtes pas adhérent\n");
+	if(*resultat == -1) printf("Reservation impossible vous n'êtes pas adhérent\n");
 
-	//Renouveler adhérent
-	resultat = renouveler_adhesion_1(nfo_poste.id_adherent,clnt);
+	//Renouveler adhérent  (Etape 5)
+	int id_adherent = 0;
+	resultat = renouveler_adhesion_1(&id_adherent,clnt);
+	if (resultat == (int *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	else printf("Vous êtes maintenant adhérent et avez la possibilité de louer un outil ou réserver un poste\n");
+
+	//Réserver poste (Impossible car pas adhérent)  (Etape 6)
+	resultat = reserver_poste_1(&info_poste,clnt);
+	if (resultat == (int *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	if(*resultat == -1) printf("Réservation impossible vous n'êtes pas adhérent\n");
+	else printf("Reservation reussie de '%s' (id de la reservation : %d)\n",postes->listePostes[info_poste.id_poste].nom,*resultat);
+	
+	
 	
 
 #ifndef	DEBUG

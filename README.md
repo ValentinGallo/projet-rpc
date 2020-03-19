@@ -35,23 +35,27 @@ int signaler_anomalie(int) //Prend en paramètre l'id de l'outil à signaler
 ```
 ## Scénario 2 :
 
-1 - afficher tarifs réservations/horraires
+1 - afficher tarifs
 ```c
-informations afficher_tarifs_postes()
+informations tarifs_horaires()
 ```
 2 - lister postes de travail dispo (date)
 ```c
 tab_postes lister_postes(param_date)
 ```
-3 - reserver poste (erreur car pas adhérent)
+3 - afficher horaires
+```c
+informations tarifs_horaires()
+```
+4 - reserver poste (erreur car pas adhérent)
 ```c
 int reserver_poste(param_poste) //Renvoie l'id de la location ou -1 si location impossible
 ```
-4 - renouveler adhésion
+5 - renouveler adhésion
 ```c
 int renouveler_adherent(personne)
 ```
-5 - reserver poste (validé car adhérent)
+6 - reserver poste (validé car adhérent)
 ```c
 int reserver_poste(param_poste) //Renvoie l'id de la location ou -1 si location impossible
 ```

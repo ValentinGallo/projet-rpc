@@ -76,14 +76,13 @@ enregistrer_adherent_1_svc(personne *argp, struct svc_req *rqstp)
 }
 
 int *
-renouveler_adherent_1_svc(personne *argp, struct svc_req *rqstp)
+renouveler_adhesion_1_svc(int *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
+	liste_personnes[*argp].adherent = 1;
 
+	result = 1;
 	return &result;
 }
 
@@ -167,24 +166,12 @@ reserver_poste_1_svc(param_poste *argp, struct svc_req *rqstp)
 	return &result;
 }
 
-int *
-renouveler_adhesion_1_svc(personne *argp, struct svc_req *rqstp)
-{
-	static int  result;
-
-	/*
-	 * insert server code here
-	 */
-
-	return &result;
-}
-
 informations *
-afficher_tarifs_postes_1_svc(void *argp, struct svc_req *rqstp)
+tarifs_horaires_1_svc(void *argp, struct svc_req *rqstp)
 {
 	static informations infos;
 	strcpy(infos.tarifs,"10€ pour 1h, 30€ pour 4h, et 50€ pour 8h");
-	strcpy(infos.horraires,"les jours de la semaine 12h à 14h ou 17h à 19h");
+	strcpy(infos.horaires,"les jours de la semaine 12h à 14h ou 17h à 19h");
 	return &infos;
 }
 

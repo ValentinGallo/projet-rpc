@@ -21,12 +21,11 @@ projet_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
 		personne enregistrer_adherent_1_arg;
-		personne renouveler_adherent_1_arg;
+		int renouveler_adhesion_1_arg;
 		param_date lister_outils_1_arg;
 		param_date lister_postes_1_arg;
 		param_outil louer_outil_1_arg;
 		param_poste reserver_poste_1_arg;
-		personne renouveler_adhesion_1_arg;
 		param_paiement effectuer_paiement_1_arg;
 		int retour_location_1_arg;
 		int signaler_anomalie_1_arg;
@@ -52,10 +51,10 @@ projet_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		local = (char *(*)(char *, struct svc_req *)) enregistrer_adherent_1_svc;
 		break;
 
-	case renouveler_adherent:
-		_xdr_argument = (xdrproc_t) xdr_personne;
+	case renouveler_adhesion:
+		_xdr_argument = (xdrproc_t) xdr_int;
 		_xdr_result = (xdrproc_t) xdr_int;
-		local = (char *(*)(char *, struct svc_req *)) renouveler_adherent_1_svc;
+		local = (char *(*)(char *, struct svc_req *)) renouveler_adhesion_1_svc;
 		break;
 
 	case lister_outils:
@@ -80,12 +79,6 @@ projet_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		_xdr_argument = (xdrproc_t) xdr_param_poste;
 		_xdr_result = (xdrproc_t) xdr_int;
 		local = (char *(*)(char *, struct svc_req *)) reserver_poste_1_svc;
-		break;
-
-	case renouveler_adhesion:
-		_xdr_argument = (xdrproc_t) xdr_personne;
-		_xdr_result = (xdrproc_t) xdr_int;
-		local = (char *(*)(char *, struct svc_req *)) renouveler_adhesion_1_svc;
 		break;
 
 	case afficher_tarifs_postes:

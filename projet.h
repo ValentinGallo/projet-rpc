@@ -124,9 +124,9 @@ extern  int * init_1_svc(void *, struct svc_req *);
 #define enregistrer_adherent 2
 extern  int * enregistrer_adherent_1(personne *, CLIENT *);
 extern  int * enregistrer_adherent_1_svc(personne *, struct svc_req *);
-#define renouveler_adherent 3
-extern  int * renouveler_adherent_1(personne *, CLIENT *);
-extern  int * renouveler_adherent_1_svc(personne *, struct svc_req *);
+#define renouveler_adhesion 3
+extern  int * renouveler_adhesion_1(int *, CLIENT *);
+extern  int * renouveler_adhesion_1_svc(int *, struct svc_req *);
 #define lister_outils 4
 extern  tab_outils * lister_outils_1(param_date *, CLIENT *);
 extern  tab_outils * lister_outils_1_svc(param_date *, struct svc_req *);
@@ -139,22 +139,19 @@ extern  int * louer_outil_1_svc(param_outil *, struct svc_req *);
 #define reserver_poste 7
 extern  int * reserver_poste_1(param_poste *, CLIENT *);
 extern  int * reserver_poste_1_svc(param_poste *, struct svc_req *);
-#define renouveler_adhesion 8
-extern  int * renouveler_adhesion_1(personne *, CLIENT *);
-extern  int * renouveler_adhesion_1_svc(personne *, struct svc_req *);
-#define afficher_tarifs_postes 9
+#define afficher_tarifs_postes 8
 extern  informations * afficher_tarifs_postes_1(void *, CLIENT *);
 extern  informations * afficher_tarifs_postes_1_svc(void *, struct svc_req *);
-#define afficher_mode_paiement 10
+#define afficher_mode_paiement 9
 extern  tab_paiements * afficher_mode_paiement_1(void *, CLIENT *);
 extern  tab_paiements * afficher_mode_paiement_1_svc(void *, struct svc_req *);
-#define effectuer_paiement 11
+#define effectuer_paiement 10
 extern  int * effectuer_paiement_1(param_paiement *, CLIENT *);
 extern  int * effectuer_paiement_1_svc(param_paiement *, struct svc_req *);
-#define retour_location 12
+#define retour_location 11
 extern  int * retour_location_1(int *, CLIENT *);
 extern  int * retour_location_1_svc(int *, struct svc_req *);
-#define signaler_anomalie 13
+#define signaler_anomalie 12
 extern  int * signaler_anomalie_1(int *, CLIENT *);
 extern  int * signaler_anomalie_1_svc(int *, struct svc_req *);
 extern int projet_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
@@ -166,9 +163,9 @@ extern  int * init_1_svc();
 #define enregistrer_adherent 2
 extern  int * enregistrer_adherent_1();
 extern  int * enregistrer_adherent_1_svc();
-#define renouveler_adherent 3
-extern  int * renouveler_adherent_1();
-extern  int * renouveler_adherent_1_svc();
+#define renouveler_adhesion 3
+extern  int * renouveler_adhesion_1();
+extern  int * renouveler_adhesion_1_svc();
 #define lister_outils 4
 extern  tab_outils * lister_outils_1();
 extern  tab_outils * lister_outils_1_svc();
@@ -181,22 +178,19 @@ extern  int * louer_outil_1_svc();
 #define reserver_poste 7
 extern  int * reserver_poste_1();
 extern  int * reserver_poste_1_svc();
-#define renouveler_adhesion 8
-extern  int * renouveler_adhesion_1();
-extern  int * renouveler_adhesion_1_svc();
-#define afficher_tarifs_postes 9
+#define afficher_tarifs_postes 8
 extern  informations * afficher_tarifs_postes_1();
 extern  informations * afficher_tarifs_postes_1_svc();
-#define afficher_mode_paiement 10
+#define afficher_mode_paiement 9
 extern  tab_paiements * afficher_mode_paiement_1();
 extern  tab_paiements * afficher_mode_paiement_1_svc();
-#define effectuer_paiement 11
+#define effectuer_paiement 10
 extern  int * effectuer_paiement_1();
 extern  int * effectuer_paiement_1_svc();
-#define retour_location 12
+#define retour_location 11
 extern  int * retour_location_1();
 extern  int * retour_location_1_svc();
-#define signaler_anomalie 13
+#define signaler_anomalie 12
 extern  int * signaler_anomalie_1();
 extern  int * signaler_anomalie_1_svc();
 extern int projet_1_freeresult ();

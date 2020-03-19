@@ -40,13 +40,13 @@ enregistrer_adherent_1(personne *argp, CLIENT *clnt)
 }
 
 int *
-renouveler_adherent_1(personne *argp, CLIENT *clnt)
+renouveler_adhesion_1(int *argp, CLIENT *clnt)
 {
 	static int clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, renouveler_adherent,
-		(xdrproc_t) xdr_personne, (caddr_t) argp,
+	if (clnt_call (clnt, renouveler_adhesion,
+		(xdrproc_t) xdr_int, (caddr_t) argp,
 		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
@@ -107,21 +107,6 @@ reserver_poste_1(param_poste *argp, CLIENT *clnt)
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, reserver_poste,
 		(xdrproc_t) xdr_param_poste, (caddr_t) argp,
-		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
-		TIMEOUT) != RPC_SUCCESS) {
-		return (NULL);
-	}
-	return (&clnt_res);
-}
-
-int *
-renouveler_adhesion_1(personne *argp, CLIENT *clnt)
-{
-	static int clnt_res;
-
-	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, renouveler_adhesion,
-		(xdrproc_t) xdr_personne, (caddr_t) argp,
 		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
