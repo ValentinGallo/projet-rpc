@@ -19,6 +19,7 @@ struct date {
 	int mois;
 	int annee;
 	int heure;
+	char jourSemaine;
 };
 typedef struct date date;
 
@@ -58,16 +59,10 @@ struct reservation {
 	int id_personne;
 	int id_poste;
 	int payer;
-	date date_debut;
-	date date_fin;
+	date date;
+	int duree;
 };
 typedef struct reservation reservation;
-
-struct param_date {
-	date date_debut;
-	date date_fin;
-};
-typedef struct param_date param_date;
 
 struct param_outil {
 	int id_outil;
@@ -78,8 +73,8 @@ typedef struct param_outil param_outil;
 struct param_poste {
 	int id_poste;
 	int id_adherent;
-	date date_debut;
-	date date_fin;
+	date date;
+	int duree;
 };
 typedef struct param_poste param_poste;
 
@@ -136,8 +131,8 @@ extern  int * renouveler_adhesion_1_svc(int *, struct svc_req *);
 extern  tab_outils * lister_outils_1(int *, CLIENT *);
 extern  tab_outils * lister_outils_1_svc(int *, struct svc_req *);
 #define lister_postes 5
-extern  tab_postes * lister_postes_1(param_date *, CLIENT *);
-extern  tab_postes * lister_postes_1_svc(param_date *, struct svc_req *);
+extern  tab_postes * lister_postes_1(void *, CLIENT *);
+extern  tab_postes * lister_postes_1_svc(void *, struct svc_req *);
 #define louer_outil 6
 extern  int * louer_outil_1(param_outil *, CLIENT *);
 extern  int * louer_outil_1_svc(param_outil *, struct svc_req *);
@@ -159,6 +154,9 @@ extern  int * retour_location_1_svc(int *, struct svc_req *);
 #define signaler_anomalie 12
 extern  int * signaler_anomalie_1(int *, CLIENT *);
 extern  int * signaler_anomalie_1_svc(int *, struct svc_req *);
+#define corriger_anomalie 13
+extern  int * corriger_anomalie_1(int *, CLIENT *);
+extern  int * corriger_anomalie_1_svc(int *, struct svc_req *);
 extern int projet_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
@@ -198,6 +196,9 @@ extern  int * retour_location_1_svc();
 #define signaler_anomalie 12
 extern  int * signaler_anomalie_1();
 extern  int * signaler_anomalie_1_svc();
+#define corriger_anomalie 13
+extern  int * corriger_anomalie_1();
+extern  int * corriger_anomalie_1_svc();
 extern int projet_1_freeresult ();
 #endif /* K&R C */
 
@@ -210,7 +211,6 @@ extern  bool_t xdr_outil (XDR *, outil*);
 extern  bool_t xdr_poste (XDR *, poste*);
 extern  bool_t xdr_location (XDR *, location*);
 extern  bool_t xdr_reservation (XDR *, reservation*);
-extern  bool_t xdr_param_date (XDR *, param_date*);
 extern  bool_t xdr_param_outil (XDR *, param_outil*);
 extern  bool_t xdr_param_poste (XDR *, param_poste*);
 extern  bool_t xdr_paiement (XDR *, paiement*);
@@ -227,7 +227,6 @@ extern bool_t xdr_outil ();
 extern bool_t xdr_poste ();
 extern bool_t xdr_location ();
 extern bool_t xdr_reservation ();
-extern bool_t xdr_param_date ();
 extern bool_t xdr_param_outil ();
 extern bool_t xdr_param_poste ();
 extern bool_t xdr_paiement ();

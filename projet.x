@@ -3,6 +3,7 @@ struct date{
     int mois; 
     int annee;
     int heure;
+    char jourSemaine;
 };
 
 struct personne{
@@ -37,13 +38,8 @@ struct reservation{
     int id_personne;
     int id_poste;
     int payer;
-    date date_debut;
-    date date_fin;
-};
-
-struct param_date{
-    date date_debut;
-    date date_fin;
+    date date;
+    int duree;
 };
 
 struct param_outil{
@@ -54,8 +50,8 @@ struct param_outil{
 struct param_poste{
     int id_poste;
     int id_adherent;
-    date date_debut;
-    date date_fin;
+    date date;
+    int duree;
 };
 
 struct paiement{
@@ -95,7 +91,7 @@ program PROJET {
         int enregistrer_adherent(personne) = 2;
         int renouveler_adhesion(int) = 3;
         tab_outils lister_outils(int) = 4;
-        tab_postes lister_postes(param_date) = 5;
+        tab_postes lister_postes() = 5;
         int louer_outil(param_outil) = 6;
         int reserver_poste(param_poste) = 7;
         informations tarifs_horaires() = 8;
@@ -103,5 +99,6 @@ program PROJET {
         int effectuer_paiement(param_paiement) = 10;
         int retour_location(int) = 11;
         int signaler_anomalie(int) = 12;
+        int corriger_anomalie(int) = 13;
 	} = 1;
 } = 0x23456789;

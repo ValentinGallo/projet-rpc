@@ -23,12 +23,12 @@ projet_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		personne enregistrer_adherent_1_arg;
 		int renouveler_adhesion_1_arg;
 		int lister_outils_1_arg;
-		param_date lister_postes_1_arg;
 		param_outil louer_outil_1_arg;
 		param_poste reserver_poste_1_arg;
 		param_paiement effectuer_paiement_1_arg;
 		int retour_location_1_arg;
 		int signaler_anomalie_1_arg;
+		int corriger_anomalie_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -64,7 +64,7 @@ projet_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		break;
 
 	case lister_postes:
-		_xdr_argument = (xdrproc_t) xdr_param_date;
+		_xdr_argument = (xdrproc_t) xdr_void;
 		_xdr_result = (xdrproc_t) xdr_tab_postes;
 		local = (char *(*)(char *, struct svc_req *)) lister_postes_1_svc;
 		break;
@@ -109,6 +109,12 @@ projet_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		_xdr_argument = (xdrproc_t) xdr_int;
 		_xdr_result = (xdrproc_t) xdr_int;
 		local = (char *(*)(char *, struct svc_req *)) signaler_anomalie_1_svc;
+		break;
+
+	case corriger_anomalie:
+		_xdr_argument = (xdrproc_t) xdr_int;
+		_xdr_result = (xdrproc_t) xdr_int;
+		local = (char *(*)(char *, struct svc_req *)) corriger_anomalie_1_svc;
 		break;
 
 	default:

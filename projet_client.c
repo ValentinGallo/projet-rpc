@@ -28,7 +28,7 @@ projet_1(char *host)
 #endif	/* DEBUG */
 
 	printf("CLIENT : \n");
-	resultat = init_1(vide,clnt);
+	resultat = init_1(&vide,clnt);
 
 	//INIT
 	if (resultat == (int *) NULL) {
@@ -119,19 +119,9 @@ projet_1(char *host)
 	}
 	else printf("- [ETAPE 1] Tarifs : %s\n",infos->tarifs);
 
-	//Lister postes de travail dispo (Etape 2)
-	date debut;
-	debut.heure = 0; //Date debut 03/01/2020 00:00
-	debut.jour = 3;
-	date fin;
-	fin.heure = 2; //Date fin 03/01/2020 00:00
-	fin.jour = 4;
-	param_date dates;
-	dates.date_debut = debut;
-	dates.date_fin = fin;
-
-	postes = lister_postes_1(&dates, clnt);
-	if (postes == (tab_postes *) NULL) {
+	//Lister postes de travail (Etape 2)
+	postes = lister_postes_1(&vide, clnt);
+	if (postes == (void *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
 	printf("- [ETAPE 2] ]///////// Liste Postes(%d dispo)  //////////\n",postes->nbPostes);
@@ -151,13 +141,14 @@ projet_1(char *host)
 	param_poste info_poste;
 	info_poste.id_adherent = 0; //Philippe Hamon (Non adhérent)
 	info_poste.id_poste = 0;
-	info_poste.date_debut = debut;
-	info_poste.date_fin = fin;
+	date la_date = {annee:2020,mois:1,jour:1,heure:12,jourSemaine:'v'};
+	info_poste.date = la_date;
+	info_poste.duree = 2;
 	resultat = reserver_poste_1(&info_poste,clnt);
 	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	if(*resultat == -1) printf("- [ETAPE 4] Reservation impossible vous n'êtes pas adhérent \n");
+	if(*resultat == -1) printf("- [ETAPE 4] Reservation impossible\n");//Pas adhérent
 
 	//Renouveler adhérent  (Etape 5)
 	int id_adherent = 0;
@@ -167,12 +158,13 @@ projet_1(char *host)
 	}
 	else printf("- [ETAPE 5] Vous êtes maintenant adhérent et avez la possibilité de louer un outil ou réserver un poste\n");
 
+	printf("heure %d\n",info_poste.date.heure);
 	//Réserver poste (Impossible car pas adhérent)  (Etape 6)
 	resultat = reserver_poste_1(&info_poste,clnt);
 	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	if(*resultat == -1) printf("Réservation impossible vous n'êtes pas adhérent\n");
+	if(*resultat == -1) printf("- [ETAPE 6] Reservation impossible\n");
 	else printf("- [ETAPE 6] Reservation reussie de '%s' (id de la reservation : %d)\n",postes->listePostes[info_poste.id_poste].nom,*resultat);
 	
 	

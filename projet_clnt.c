@@ -70,13 +70,13 @@ lister_outils_1(int *argp, CLIENT *clnt)
 }
 
 tab_postes *
-lister_postes_1(param_date *argp, CLIENT *clnt)
+lister_postes_1(void *argp, CLIENT *clnt)
 {
 	static tab_postes clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, lister_postes,
-		(xdrproc_t) xdr_param_date, (caddr_t) argp,
+		(xdrproc_t) xdr_void, (caddr_t) argp,
 		(xdrproc_t) xdr_tab_postes, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
@@ -181,6 +181,21 @@ signaler_anomalie_1(int *argp, CLIENT *clnt)
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, signaler_anomalie,
+		(xdrproc_t) xdr_int, (caddr_t) argp,
+		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
+
+int *
+corriger_anomalie_1(int *argp, CLIENT *clnt)
+{
+	static int clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, corriger_anomalie,
 		(xdrproc_t) xdr_int, (caddr_t) argp,
 		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {

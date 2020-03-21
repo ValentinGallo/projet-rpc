@@ -19,6 +19,7 @@ int nbReservations;
 paiement paiements[5]; //Liste des paiements
 int nbPaiements;
 
+
 int *
 init_1_svc(void *argp, struct svc_req *rqstp)
 {
@@ -124,14 +125,14 @@ lister_outils_1_svc(int *argp, struct svc_req *rqstp)
 	if(*argp == 1) {
 		for (int i = 0; i < nbOutils; i++)
 		{
-			int outil_deja_louer = 0;
+			int outil_deja_loue = 0;
 			for(int y = 0;y<nbLocations;y++){
 				if(locations[y].id_outil == i && locations[y].retourner == 0){
 					//Ne pas ajouter à la liste car déjà louer
-					outil_deja_louer = 1;
+					outil_deja_loue = 1;
 				}
 			}
-			if(!outil_deja_louer && !outils[i].anomalie){
+			if(!outil_deja_loue && !outils[i].anomalie){
 				result.listeOutils[i] = outils[i];
 				result.nbOutils++;
 			}
@@ -152,17 +153,17 @@ lister_outils_1_svc(int *argp, struct svc_req *rqstp)
 }
 
 tab_postes *
-lister_postes_1_svc(param_date *argp, struct svc_req *rqstp)
+lister_postes_1_svc(void *argp, struct svc_req *rqstp)
 {
 	//A FINIR RECHERCHE EN FONCTION DES DATES ETC
 	static tab_postes  result;
 	result.nbPostes = 0;
 
-
 	for (int i = 0; i < nbPostes; i++)
 	{
 		result.listePostes[i] = postes[i];
 		result.nbPostes++;
+
 	}
 
 	return &result;
@@ -191,26 +192,22 @@ louer_outil_1_svc(param_outil *argp, struct svc_req *rqstp)
 int *
 reserver_poste_1_svc(param_poste *argp, struct svc_req *rqstp)
 {
-	static int  result;
-	if(liste_personnes[argp->id_adherent].adherent == 0){
-		result = -1; //Si la personne n'est pas adhérent
-	}
-	else
-	{
-		//Creation de la reservation
-		reservation la_reservation;
-		la_reservation.id = nbReservations;
-		la_reservation.id_personne = argp->id_adherent;
-		la_reservation.id_poste = argp->id_poste;
-		la_reservation.date_debut = argp->date_debut;
-		la_reservation.date_fin = argp->date_fin;
-		reservations[nbReservations] = la_reservation;
-		nbReservations++;
+	static int  result = -1;
+	if(liste_personnes[argp->id_adherent].adherent == 0)return &result; //Si la personne n'est pas adhérent
+	if(argp->date.jourSemaine == 'd')return &result; //Reservation impossible le dimanche
+	if(argp->date.jourSemaine == 's' && (argp->date.heure < 14 || argp->date.heure > 18))return &result;; //Reservation impossible le dimanche
+	if(argp->date.heure < 12 || ((argp->date.heure > 14 && argp->date.heure < 17))|| argp->date.heure > 19)return &result; //Reservation impossible heure incorrect
+	//Creation de la reservation
+	reservation la_reservation;
+	la_reservation.id = nbReservations;
+	la_reservation.id_personne = argp->id_adherent;
+	la_reservation.id_poste = argp->id_poste;
+	la_reservation.date = argp->date;
+	la_reservation.duree = argp->duree;
+	reservations[nbReservations] = la_reservation;
+	nbReservations++;
 
-		result = la_reservation.id;
-		
-	}
-	
+	result = la_reservation.id;
 
 	return &result;
 }
@@ -270,6 +267,17 @@ signaler_anomalie_1_svc(int *argp, struct svc_req *rqstp)
 	static int  result;
 
 	outils[*argp].anomalie = 1;
+	result = 1;
+	return &result;
+}
+
+
+int *
+corriger_anomalie_1_svc(int *argp, struct svc_req *rqstp)
+{
+	static int  result;
+
+	outils[*argp].anomalie = 0;
 	result = 1;
 	return &result;
 }

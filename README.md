@@ -41,7 +41,7 @@ informations tarifs_horaires()
 ```
 2 - lister postes de travail dispo (date)
 ```c
-tab_postes lister_postes(param_date)
+tab_postes lister_postes()
 ```
 3 - afficher horaires
 ```c
@@ -109,8 +109,8 @@ struct reservation{
     int id_personne;
     int id_poste;
     int payer;
-    date date_debut;
-    date date_fin;
+    date date;
+    int duree;
 };
 ```
 
@@ -121,6 +121,7 @@ struct date{
     int mois; 
     int annee;
     int heure;
+    char jourSemaine; //Ex : d = dimanche
 };
 ```
 
@@ -151,20 +152,14 @@ struct param_paiement{
 struct param_poste{
     int id_poste;
     int id_adherent;
-    date date_debut;
-    date date_fin;
+    date date;
+    int duree;
 };
 ```
 ```c
 struct param_outil{
     int id_outil;
     int id_adherent;
-};
-```
-```c
-struct param_date{
-    date date_debut;
-    date date_fin;
 };
 ```
 

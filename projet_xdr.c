@@ -22,12 +22,15 @@ xdr_date (XDR *xdrs, date *objp)
 				 return FALSE;
 			 if (!xdr_int (xdrs, &objp->heure))
 				 return FALSE;
+
 		} else {
-			IXDR_PUT_LONG(buf, objp->jour);
-			IXDR_PUT_LONG(buf, objp->mois);
-			IXDR_PUT_LONG(buf, objp->annee);
-			IXDR_PUT_LONG(buf, objp->heure);
+		IXDR_PUT_LONG(buf, objp->jour);
+		IXDR_PUT_LONG(buf, objp->mois);
+		IXDR_PUT_LONG(buf, objp->annee);
+		IXDR_PUT_LONG(buf, objp->heure);
 		}
+		 if (!xdr_char (xdrs, &objp->jourSemaine))
+			 return FALSE;
 		return TRUE;
 	} else if (xdrs->x_op == XDR_DECODE) {
 		buf = XDR_INLINE (xdrs, 4 * BYTES_PER_XDR_UNIT);
@@ -40,12 +43,15 @@ xdr_date (XDR *xdrs, date *objp)
 				 return FALSE;
 			 if (!xdr_int (xdrs, &objp->heure))
 				 return FALSE;
+
 		} else {
-			objp->jour = IXDR_GET_LONG(buf);
-			objp->mois = IXDR_GET_LONG(buf);
-			objp->annee = IXDR_GET_LONG(buf);
-			objp->heure = IXDR_GET_LONG(buf);
+		objp->jour = IXDR_GET_LONG(buf);
+		objp->mois = IXDR_GET_LONG(buf);
+		objp->annee = IXDR_GET_LONG(buf);
+		objp->heure = IXDR_GET_LONG(buf);
 		}
+		 if (!xdr_char (xdrs, &objp->jourSemaine))
+			 return FALSE;
 	 return TRUE;
 	}
 
@@ -56,6 +62,8 @@ xdr_date (XDR *xdrs, date *objp)
 	 if (!xdr_int (xdrs, &objp->annee))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->heure))
+		 return FALSE;
+	 if (!xdr_char (xdrs, &objp->jourSemaine))
 		 return FALSE;
 	return TRUE;
 }
@@ -199,9 +207,9 @@ xdr_reservation (XDR *xdrs, reservation *objp)
 		IXDR_PUT_LONG(buf, objp->id_poste);
 		IXDR_PUT_LONG(buf, objp->payer);
 		}
-		 if (!xdr_date (xdrs, &objp->date_debut))
+		 if (!xdr_date (xdrs, &objp->date))
 			 return FALSE;
-		 if (!xdr_date (xdrs, &objp->date_fin))
+		 if (!xdr_int (xdrs, &objp->duree))
 			 return FALSE;
 		return TRUE;
 	} else if (xdrs->x_op == XDR_DECODE) {
@@ -222,9 +230,9 @@ xdr_reservation (XDR *xdrs, reservation *objp)
 		objp->id_poste = IXDR_GET_LONG(buf);
 		objp->payer = IXDR_GET_LONG(buf);
 		}
-		 if (!xdr_date (xdrs, &objp->date_debut))
+		 if (!xdr_date (xdrs, &objp->date))
 			 return FALSE;
-		 if (!xdr_date (xdrs, &objp->date_fin))
+		 if (!xdr_int (xdrs, &objp->duree))
 			 return FALSE;
 	 return TRUE;
 	}
@@ -237,21 +245,9 @@ xdr_reservation (XDR *xdrs, reservation *objp)
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->payer))
 		 return FALSE;
-	 if (!xdr_date (xdrs, &objp->date_debut))
+	 if (!xdr_date (xdrs, &objp->date))
 		 return FALSE;
-	 if (!xdr_date (xdrs, &objp->date_fin))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t
-xdr_param_date (XDR *xdrs, param_date *objp)
-{
-	register int32_t *buf;
-
-	 if (!xdr_date (xdrs, &objp->date_debut))
-		 return FALSE;
-	 if (!xdr_date (xdrs, &objp->date_fin))
+	 if (!xdr_int (xdrs, &objp->duree))
 		 return FALSE;
 	return TRUE;
 }
@@ -277,9 +273,9 @@ xdr_param_poste (XDR *xdrs, param_poste *objp)
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->id_adherent))
 		 return FALSE;
-	 if (!xdr_date (xdrs, &objp->date_debut))
+	 if (!xdr_date (xdrs, &objp->date))
 		 return FALSE;
-	 if (!xdr_date (xdrs, &objp->date_fin))
+	 if (!xdr_int (xdrs, &objp->duree))
 		 return FALSE;
 	return TRUE;
 }
