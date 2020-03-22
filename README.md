@@ -25,14 +25,15 @@ tab_paiements afficher_mode_paiement();
 ```c
 int effectuer_paiement(param_paiement);
 ```
-6 - Retour Outils
-```c
-int retour_location(int); //Prend en paramètre l'id de l'outil à renvoyer
-```
-7 - Signaler un anomalie
+6 - Signaler un anomalie
 ```c
 int signaler_anomalie(int) //Prend en paramètre l'id de l'outil à signaler
 ```
+7 - Retour Outils
+```c
+int retour_location(int); //Prend en paramètre l'id de l'outil à renvoyer
+```
+
 ## Scénario 2 :
 
 1 - afficher tarifs
