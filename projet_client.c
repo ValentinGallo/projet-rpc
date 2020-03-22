@@ -141,7 +141,7 @@ projet_1(char *host)
 	param_poste info_poste;
 	info_poste.id_adherent = 0; //Philippe Hamon (Non adhérent)
 	info_poste.id_poste = 0;
-	date la_date = {annee:2020,mois:1,jour:1,heure:12,jourSemaine:'v'};
+	date la_date = {annee:2020,mois:1,jour:1,heure:13,jourSemaine:'v'};
 	info_poste.date = la_date;
 	info_poste.duree = 2;
 	resultat = reserver_poste_1(&info_poste,clnt);

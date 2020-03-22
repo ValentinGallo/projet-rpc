@@ -88,6 +88,7 @@ init_1_svc(void *argp, struct svc_req *rqstp)
 	nbLocations++;
 
 	result = 1;
+	printf("- Init \n");
 	return &result;
 }
 
@@ -99,8 +100,8 @@ enregistrer_adherent_1_svc(personne *argp, struct svc_req *rqstp)
 	argp->id = nbPersonnes;
 	liste_personnes[argp->id] = *argp;
 	nbPersonnes++;
-	printf("enregistrement");
 	result = argp->id;
+	printf("- Enregistrement d'un adhérent (%s %s)\n",argp->prenom,argp->nom);
 	return &result;
 }
 
@@ -112,6 +113,7 @@ renouveler_adhesion_1_svc(int *argp, struct svc_req *rqstp)
 	liste_personnes[*argp].adherent = 1;
 
 	result = 1;
+	printf("- Renouvellement  (%s %s)\n",liste_personnes[*argp].prenom,liste_personnes[*argp].nom);
 	return &result;
 }
 
@@ -137,25 +139,23 @@ lister_outils_1_svc(int *argp, struct svc_req *rqstp)
 				result.nbOutils++;
 			}
 		}
+		printf("- Envoi liste outils seulement dispo(%d outils)\n",result.nbOutils);
 	}
-	//Tous les outils
+	//Ou tous les outils
 	else{
 		for (int i = 0; i < nbPostes; i++)
 		{
 			result.listeOutils[i] = outils[i];
 			result.nbOutils++;
 		}
+		printf("- Envoi liste outils(%d outils)\n",result.nbOutils);
 	}
-	
-
-
 	return &result;
 }
 
 tab_postes *
 lister_postes_1_svc(void *argp, struct svc_req *rqstp)
 {
-	//A FINIR RECHERCHE EN FONCTION DES DATES ETC
 	static tab_postes  result;
 	result.nbPostes = 0;
 
@@ -166,6 +166,7 @@ lister_postes_1_svc(void *argp, struct svc_req *rqstp)
 
 	}
 
+	printf("- Envoi liste postes(%d outil)\n",result.nbPostes);
 	return &result;
 }
 
@@ -176,16 +177,17 @@ louer_outil_1_svc(param_outil *argp, struct svc_req *rqstp)
 
 	//Creation de la location
 	location la_location;
-    la_location.id = nbLocations; //A changer en fonction de l'emplacement
+    la_location.id = nbLocations;
 	la_location.id_personne = argp->id_adherent;
 	la_location.id_outil = argp->id_outil;
 	la_location.retourner = 0;
 	la_location.payer = 0;
 
-	locations[nbLocations] = la_location; //A changer en fonction de l'emplacement
+	locations[nbLocations] = la_location;
 
 	result = la_location.id;
 	nbLocations++;
+	printf("- Location d'un outil (%s)\n",outils[argp->id_outil].nom);
 	return &result;
 }
 
@@ -208,7 +210,7 @@ reserver_poste_1_svc(param_poste *argp, struct svc_req *rqstp)
 	nbReservations++;
 
 	result = la_reservation.id;
-
+	printf("- Location d'un poste (%s)\n",postes[argp->id_poste].nom);
 	return &result;
 }
 
@@ -218,6 +220,7 @@ tarifs_horaires_1_svc(void *argp, struct svc_req *rqstp)
 	static informations infos;
 	strcpy(infos.tarifs,"10€ pour 1h, 30€ pour 4h, et 50€ pour 8h");
 	strcpy(infos.horaires,"les jours de la semaine 12h à 14h ou 17h à 19h");
+	printf("- Envoi des tarifs ou horaires\n");
 	return &infos;
 }
 
@@ -232,6 +235,7 @@ afficher_mode_paiement_1_svc(void *argp, struct svc_req *rqstp)
 		result.listePaiements[i] = paiements[i];
 		result.nbPaiements++;
 	}
+	printf("- Envoi des modes de paiements (%d disponibles)\n",result.nbPaiements);
 	return &result;
 }
 
@@ -242,6 +246,7 @@ effectuer_paiement_1_svc(param_paiement *argp, struct svc_req *rqstp)
 
 	locations[argp->id_location].payer = 1;
 	result = 1;
+	printf("- Effectuer paiements\n");
 	return &result;
 }
 
@@ -256,8 +261,7 @@ retour_location_1_svc(int *argp, struct svc_req *rqstp)
 			locations[i].retourner == 1;
 		}
 	}
-	
-
+	printf("- Retourner location\n");
 	return &result;
 }
 
@@ -268,6 +272,7 @@ signaler_anomalie_1_svc(int *argp, struct svc_req *rqstp)
 
 	outils[*argp].anomalie = 1;
 	result = 1;
+	printf("- Signalement d'une anomalie sur l'outil (%s)\n",outils[*argp].nom);
 	return &result;
 }
 
@@ -279,5 +284,6 @@ corriger_anomalie_1_svc(int *argp, struct svc_req *rqstp)
 
 	outils[*argp].anomalie = 0;
 	result = 1;
+	printf("- Correction d'une anomalie sur l'outil\n");
 	return &result;
 }
