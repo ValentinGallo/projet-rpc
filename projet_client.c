@@ -93,21 +93,21 @@ projet_1(char *host)
 	}
 	else printf("- [ETAPE 5] Paiement réussie avec %s\n",paiements->listePaiements[info_paiement.id_paiement].nom);
 
-	//Retour Outil (Etape 6)
+	//Signalement d'une anomalie (Etape 6)
 	int id_outil = 0;
-	resultat = retour_location_1(&id_outil, clnt);
-	if (resultat == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	else printf("- [ETAPE 6] Retour de l'outil %s réussie\n",outils->listeOutils[id_outil].nom);
-
-	//Signalement d'une anomalie (Etape 7)
-	id_outil = 0;
 	resultat = signaler_anomalie_1(&id_outil, clnt);
 	if (resultat == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	else printf("- [ETAPE 7] Une anomalie à bien été signalé sur l'outil %s\n",outils->listeOutils[id_outil].nom); 
+	else printf("- [ETAPE 6] Une anomalie à bien été signalé sur l'outil %s\n",outils->listeOutils[id_outil].nom); 
+
+	//Retour Outil (Etape 7)
+	id_outil = 0;
+	resultat = retour_location_1(&id_outil, clnt);
+	if (resultat == (int *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	else printf("- [ETAPE 7] Retour de l'outil %s réussie\n",outils->listeOutils[id_outil].nom);
 
 	//Scénario 2 :
 	printf("\n|| Scénario 2 ||\n\n");

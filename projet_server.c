@@ -20,9 +20,11 @@ paiement paiements[5]; //Liste des paiements
 int nbPaiements;
 
 
+
 int *
 init_1_svc(void *argp, struct svc_req *rqstp)
 {
+	printf("Serveur : \n");
 	static int  result;
 
 	//Initialisations des nb tableaux à 0
